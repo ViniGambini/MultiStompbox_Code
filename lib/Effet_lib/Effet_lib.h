@@ -3,6 +3,9 @@
 // 2024-01
 // Version 1
 
+// Permet de lire les noms des effets
+// Permet de lire et écrire des valeurs de Potentiomètre
+
 #ifndef Effet_lib_h
 #define Effet_lib_h
 

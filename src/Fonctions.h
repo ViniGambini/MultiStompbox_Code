@@ -1,8 +1,11 @@
 #ifndef Fonctions_h
 #define Fonctions_h
 
+#include "DFRobot_GDL.h"
 #include "IO_Pin.h"
 #include <SPI.h>
+
+DFRobot_ST7789_240x320_HW_SPI screen(/*dc=*/IO_DC_ECRAN, /*cs=*/IO_CS_ECRAN, /*rst=*/IO_RST_ECRAN);
 
 // Initialisation du SPI/Serial
 // pinMode() des IOs

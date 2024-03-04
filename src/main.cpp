@@ -5,7 +5,6 @@
 // ---------------------------------------------- //
 
 #include <Arduino.h>
-#include "DFRobot_GDL.h"
 #include "Effet_lib.h"
 #include "IO_Pin.h"
 #include "Fonctions.h"
@@ -24,12 +23,28 @@
 //                    Objets                    //
 //----------------------------------------------//
 
-DFRobot_ST7789_240x320_HW_SPI screen(/*dc=*/IO_DC_ECRAN, /*cs=*/IO_CS_ECRAN, /*rst=*/IO_RST_ECRAN);
 Effet_lib effets;
 
 //----------------------------------------------//
 //                   Variables                  //
 //----------------------------------------------//
+
+enum etat { 
+  select_effet,
+  change_effet,
+  select_vol,
+  change_vol,
+  select_mix,
+  change_mix,
+  select_ctrl1,
+  change_ctrl1,
+  select_ctrl2,
+  change_ctrl2,
+  select_ctrl3,
+  change_ctrl3,
+
+  
+} etat_affichage;
 
 uint8_t currentStateCLK;           // pour encodeur
 uint8_t lastStateCLK;              // pour encodeur

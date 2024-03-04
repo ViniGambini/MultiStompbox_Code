@@ -53,7 +53,6 @@ unsigned long lastButtonPress = 0; // pour anti rebond du bouton
 unsigned long lastExecutedMillis = 0; // pour timer l'envoie des données sur le terminal
 
 uint8_t effet_actif = 1;
-uint8_t val_pot_vol = 50;
 
 //----------------------------------------------//
 //                    Setup                     //
@@ -65,7 +64,7 @@ void setup()
 
   // Setup de l'écran
   screen.begin();
-  screen.fillScreen(COLOR_RGB565_BLACK);
+  screen.fillScreen(COLOR_RGB565_BLUE);
 
   lastStateCLK = digitalRead(IO_S1_ENC);
 
@@ -75,7 +74,7 @@ void setup()
   digitalPotRegisterWrite(IO_CS_POT_A, TCON, 0xFF);
   digitalPotRegisterWrite(IO_CS_POT_B, TCON, 0xFF);
   delay(200);
-  digitalPotWrite(IO_CS_POT_VOL, POT_0, val_pot_vol);
+  digitalPotWrite(IO_CS_POT_VOL, POT_0, effets.lire_val_pot_vol());
   digitalPotWrite(IO_CS_POT_MIX, POT_0, effets.lire_val_pot(effet_actif, Mix));
   digitalPotWrite(IO_CS_POT_A, POT_0, effets.lire_val_pot(effet_actif, Ctrl1));
   digitalPotWrite(IO_CS_POT_A, POT_1, effets.lire_val_pot(effet_actif, Ctrl2));

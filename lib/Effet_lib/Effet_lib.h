@@ -46,6 +46,23 @@ public:
     // sortie : tableau de char qui contient les noms
     char *get_nom_ctrl3(uint8_t numero);
 
+    // Permet de lire la valeur du potentiomètre de volume
+    //
+    // retourne le pourcentage du potentiomètre désiré
+    uint8_t lire_val_pot_vol(void);
+
+    // Permet d'augmenter la valeur d'un potentiomètre d'une valeur donnée
+    //
+    // quantite : nombre de % en plus par appel de fonction
+    // retourne la valeur modifiée
+    uint8_t augmenter_val_pot_vol(uint8_t quantite);
+
+    // Permet de réduire la valeur d'un potentiomètre d'une valeur donnée
+    //
+    // quantite : nombre de % en moins par appel de fonction
+    // retourne la valeur modifiée
+    uint8_t reduire_val_pot_vol(uint8_t quantite);
+
     // Permet de lire la valeur d'un potentiomètre
     //
     // no_effet : numéro de l'effet (1 à 16)
@@ -72,6 +89,8 @@ public:
 private:
     char _buffer[20];
     uint8_t _numero;
+
+    uint8_t _val_pot_vol = 50;
     //                         mix ctrl1 ctrl2 ctrl3
     uint8_t _val_pot_effet[64] = {50, 50, 50, 50,  // effet 1
                                   50, 50, 50, 50,  // effet 2

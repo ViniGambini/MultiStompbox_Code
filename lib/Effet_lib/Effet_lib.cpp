@@ -34,6 +34,30 @@ char *Effet_lib::get_nom_ctrl3(uint8_t numero)
     return _buffer;
 }
 
+uint8_t Effet_lib::lire_val_pot_vol(void){
+    return _val_pot_vol;
+}
+
+uint8_t Effet_lib::augmenter_val_pot_vol(uint8_t quantite){
+    if(_val_pot_vol + quantite < 100){
+        _val_pot_vol = _val_pot_vol + quantite;
+    }
+    else{
+        _val_pot_vol = 100;
+    }
+    return _val_pot_vol;
+}
+
+uint8_t Effet_lib::reduire_val_pot_vol(uint8_t quantite){
+    if(_val_pot_vol - quantite > 0){
+        _val_pot_vol = _val_pot_vol - quantite;
+    }
+    else{
+        _val_pot_vol = 0;
+    }
+    return _val_pot_vol;
+}
+
 uint8_t Effet_lib::lire_val_pot(uint8_t no_effet, pot_type no_pot)
 {
     return _val_pot_effet[((no_effet - 1) * 4) + no_pot];

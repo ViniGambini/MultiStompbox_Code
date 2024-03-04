@@ -11,6 +11,8 @@ DFRobot_ST7789_240x320_HW_SPI screen(/*dc=*/IO_DC_ECRAN, /*cs=*/IO_CS_ECRAN, /*r
 // pinMode() des IOs
 void board_init(void);
 
+//void screen_init(void);
+
 /*Envoie une valeur au potentiomètre donnée
   CS_pin : numéro de pin CS de la pièce
   num_pot : numéro du potentiomètre dans la pièce (Pot_0 ou Pot_1)

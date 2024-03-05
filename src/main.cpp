@@ -46,6 +46,7 @@ enum etat
 
 } etat_affichage;
 
+uint8_t btnState;
 uint8_t currentStateCLK;           // pour encodeur
 uint8_t lastStateCLK;              // pour encodeur
 unsigned long lastButtonPress = 0; // pour anti rebond du bouton
@@ -119,7 +120,7 @@ void loop()
     }
 
     // Lecture du bouton
-    int btnState = digitalRead(IO_SW_ENC);
+    btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
     {
       if (millis() - lastButtonPress > 50)
@@ -143,7 +144,7 @@ void loop()
     }
 
     // Lecture du bouton
-    int btnState = digitalRead(IO_SW_ENC);
+    btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
     {
       if (millis() - lastButtonPress > 50)
@@ -167,7 +168,7 @@ void loop()
     }
 
     // Lecture du bouton
-    int btnState = digitalRead(IO_SW_ENC);
+    btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
     {
       if (millis() - lastButtonPress > 50)
@@ -191,7 +192,7 @@ void loop()
     }
 
     // Lecture du bouton
-    int btnState = digitalRead(IO_SW_ENC);
+    btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
     {
       if (millis() - lastButtonPress > 50)
@@ -215,7 +216,7 @@ void loop()
     }
 
     // Lecture du bouton
-    int btnState = digitalRead(IO_SW_ENC);
+    btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
     {
       if (millis() - lastButtonPress > 50)
@@ -239,7 +240,7 @@ void loop()
     }
 
     // Lecture du bouton
-    int btnState = digitalRead(IO_SW_ENC);
+    btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
     {
       if (millis() - lastButtonPress > 50)
@@ -263,7 +264,7 @@ void loop()
     }
 
     // Lecture du bouton
-    int btnState = digitalRead(IO_SW_ENC);
+    btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
     {
       if (millis() - lastButtonPress > 50)
@@ -287,7 +288,7 @@ void loop()
     }
 
     // Lecture du bouton
-    int btnState = digitalRead(IO_SW_ENC);
+    btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
     {
       if (millis() - lastButtonPress > 50)
@@ -311,7 +312,7 @@ void loop()
     }
 
     // Lecture du bouton
-    int btnState = digitalRead(IO_SW_ENC);
+    btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
     {
       if (millis() - lastButtonPress > 50)
@@ -335,7 +336,7 @@ void loop()
     }
 
     // Lecture du bouton
-    int btnState = digitalRead(IO_SW_ENC);
+    btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
     {
       if (millis() - lastButtonPress > 50)
@@ -359,7 +360,7 @@ void loop()
     }
 
     // Lecture du bouton
-    int btnState = digitalRead(IO_SW_ENC);
+    btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
     {
       if (millis() - lastButtonPress > 50)
@@ -383,7 +384,7 @@ void loop()
     }
 
     // Lecture du bouton
-    int btnState = digitalRead(IO_SW_ENC);
+    btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
     {
       if (millis() - lastButtonPress > 50)

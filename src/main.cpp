@@ -5,7 +5,7 @@
 // ---------------------------------------------- //
 
 #include <Arduino.h>
-#include "DFRobot_GDL.h"
+//#include "DFRobot_GDL.h"
 #include "Effet_lib.h"
 #include "IO_Pin.h"
 #include "Fonctions.h"
@@ -24,6 +24,7 @@
 //                    Objets                    //
 //----------------------------------------------//
 
+DFRobot_ST7789_240x320_HW_SPI screen(/*dc=*/IO_DC_ECRAN, /*cs=*/IO_CS_ECRAN, /*rst=*/IO_RST_ECRAN);
 Effet_lib effets;
 
 //----------------------------------------------//
@@ -55,17 +56,21 @@ unsigned long lastExecutedMillis = 0; // pour timer l'envoie des données sur le
 
 uint8_t effet_actif = 1;
 
+void init_ecran(void){
+  screen.begin();
+  screen.fillScreen(COLOR_RGB565_DGRAY);
+}
+
 //----------------------------------------------//
 //                    Setup                     //
 //----------------------------------------------//
 
 void setup()
 {
-  board_init();
+  init_board();
 
   // Setup de l'écran
-  screen.begin();
-  screen.fillScreen(COLOR_RGB565_BLUE);
+  init_ecran();
 
   lastStateCLK = digitalRead(IO_S1_ENC);
 
@@ -80,6 +85,8 @@ void setup()
   digitalPotWrite(IO_CS_POT_A, POT_0, effets.lire_val_pot(effet_actif, Ctrl1));
   digitalPotWrite(IO_CS_POT_A, POT_1, effets.lire_val_pot(effet_actif, Ctrl2));
   digitalPotWrite(IO_CS_POT_B, POT_0, effets.lire_val_pot(effet_actif, Ctrl3));
+
+  //screen.fillScreen(COLOR_RGB565_BLUE);
 
   // Menu Principal
 }

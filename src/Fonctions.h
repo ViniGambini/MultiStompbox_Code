@@ -5,13 +5,11 @@
 #include "IO_Pin.h"
 #include <SPI.h>
 
-DFRobot_ST7789_240x320_HW_SPI screen(/*dc=*/IO_DC_ECRAN, /*cs=*/IO_CS_ECRAN, /*rst=*/IO_RST_ECRAN);
-
 // Initialisation du SPI/Serial
 // pinMode() des IOs
-void board_init(void);
+void init_board(void);
 
-//void screen_init(void);
+//void init_ecran(void);
 
 /*Envoie une valeur au potentiomètre donnée
   CS_pin : numéro de pin CS de la pièce

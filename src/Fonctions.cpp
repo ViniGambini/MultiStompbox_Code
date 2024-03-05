@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "Fonctions.h"
 
-void board_init(void){
+void init_board(void){
     SPI.begin();
     Serial.begin(9600);
 
@@ -42,6 +42,7 @@ void digitalPotWrite(uint8_t CS_pin, uint8_t num_pot, uint8_t pourcentage)
   digitalWrite(CS_pin, HIGH); // met la pin CS a 1
   delay(1);
 }
+
 void digitalPotRegisterWrite(uint8_t CS_pin, uint8_t registre, uint8_t valeur)
 {
   digitalWrite(CS_pin, LOW);  // met la pin CS a 0

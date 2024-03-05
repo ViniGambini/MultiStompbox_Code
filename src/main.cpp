@@ -29,7 +29,8 @@ Effet_lib effets;
 //                   Variables                  //
 //----------------------------------------------//
 
-enum etat { 
+enum etat
+{
   select_effet,
   change_effet,
   select_vol,
@@ -41,7 +42,7 @@ enum etat {
   select_ctrl2,
   change_ctrl2,
   select_ctrl3,
-  change_ctrl3,
+  change_ctrl3
 
 } etat_affichage;
 
@@ -58,8 +59,9 @@ uint8_t effet_actif = 1;
 //                    Écran                     //
 //----------------------------------------------//
 
-//Initialise l'écran
-void init_ecran(void){
+// Initialise l'écran
+void init_ecran(void)
+{
   screen.begin();
   screen.fillScreen(COLOR_RGB565_DGRAY);
 }
@@ -87,6 +89,9 @@ void setup()
   digitalPotWrite(IO_CS_POT_A, POT_1, effets.lire_val_pot(effet_actif, Ctrl2));
   digitalPotWrite(IO_CS_POT_B, POT_0, effets.lire_val_pot(effet_actif, Ctrl3));
 
+  // État de départ
+  etat_affichage = select_effet;
+
   // Menu Principal
 }
 
@@ -99,33 +104,298 @@ void loop()
   // lit l'état de la pin CLK
   currentStateCLK = digitalRead(IO_S1_ENC);
 
-  // switch case
-
-  if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+  switch (etat_affichage)
   {
-    if (digitalRead(IO_S2_ENC) != currentStateCLK)
-    { // CCW
+  case select_effet:
+    // Lecture de l'encodeur
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+      }
+      else
+      { // CW
+      }
     }
-    else
-    { // CW
-    }
-  }
 
-  // fin switch case
+    // Lecture du bouton
+    int btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        // code ici
+      }
+      lastButtonPress = millis();
+    }
+    break;
+
+  case change_effet:
+    // Lecture de l'encodeur
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+      }
+      else
+      { // CW
+      }
+    }
+
+    // Lecture du bouton
+    int btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        // code ici
+      }
+      lastButtonPress = millis();
+    }
+    break;
+
+  case select_vol:
+    // Lecture de l'encodeur
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+      }
+      else
+      { // CW
+      }
+    }
+
+    // Lecture du bouton
+    int btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        // code ici
+      }
+      lastButtonPress = millis();
+    }
+    break;
+
+  case change_vol:
+    // Lecture de l'encodeur
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+      }
+      else
+      { // CW
+      }
+    }
+
+    // Lecture du bouton
+    int btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        // code ici
+      }
+      lastButtonPress = millis();
+    }
+    break;
+
+  case select_mix:
+    // Lecture de l'encodeur
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+      }
+      else
+      { // CW
+      }
+    }
+
+    // Lecture du bouton
+    int btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        // code ici
+      }
+      lastButtonPress = millis();
+    }
+    break;
+
+  case change_mix:
+    // Lecture de l'encodeur
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+      }
+      else
+      { // CW
+      }
+    }
+
+    // Lecture du bouton
+    int btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        // code ici
+      }
+      lastButtonPress = millis();
+    }
+    break;
+
+  case select_ctrl1:
+    // Lecture de l'encodeur
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+      }
+      else
+      { // CW
+      }
+    }
+
+    // Lecture du bouton
+    int btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        // code ici
+      }
+      lastButtonPress = millis();
+    }
+    break;
+
+  case change_ctrl1:
+    // Lecture de l'encodeur
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+      }
+      else
+      { // CW
+      }
+    }
+
+    // Lecture du bouton
+    int btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        // code ici
+      }
+      lastButtonPress = millis();
+    }
+    break;
+
+  case select_ctrl2:
+    // Lecture de l'encodeur
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+      }
+      else
+      { // CW
+      }
+    }
+
+    // Lecture du bouton
+    int btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        // code ici
+      }
+      lastButtonPress = millis();
+    }
+    break;
+
+  case change_ctrl2:
+    // Lecture de l'encodeur
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+      }
+      else
+      { // CW
+      }
+    }
+
+    // Lecture du bouton
+    int btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        // code ici
+      }
+      lastButtonPress = millis();
+    }
+    break;
+
+  case select_ctrl3:
+    // Lecture de l'encodeur
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+      }
+      else
+      { // CW
+      }
+    }
+
+    // Lecture du bouton
+    int btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        // code ici
+      }
+      lastButtonPress = millis();
+    }
+    break;
+
+  case change_ctrl3:
+    // Lecture de l'encodeur
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+      }
+      else
+      { // CW
+      }
+    }
+
+    // Lecture du bouton
+    int btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        // code ici
+      }
+      lastButtonPress = millis();
+    }
+    break;
+  }
 
   lastStateCLK = currentStateCLK;
 
-  //----------------------Lecture bouton----------------------
-
-  int btnState = digitalRead(IO_SW_ENC);
-  if (btnState == LOW)
-  {
-    if (millis() - lastButtonPress > 50)
-    {
-      // code ici
-    }
-    lastButtonPress = millis();
-  }
-  
   delay(1);
 }

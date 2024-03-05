@@ -5,9 +5,7 @@
 // ---------------------------------------------- //
 
 #include <Arduino.h>
-//#include "DFRobot_GDL.h"
 #include "Effet_lib.h"
-#include "IO_Pin.h"
 #include "Fonctions.h"
 
 //----------------------------------------------//

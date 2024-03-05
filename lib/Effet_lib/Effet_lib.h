@@ -10,6 +10,7 @@
 #define Effet_lib_h
 
 #include <Arduino.h>
+#include "Effet_nom.h"
 
 enum pot_type
 {

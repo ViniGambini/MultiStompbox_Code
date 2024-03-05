@@ -4,7 +4,6 @@
 // Version 1
 
 #include "Effet_lib.h"
-#include "Effet_nom.h"
 
 char *Effet_lib::get_nom_effet(uint8_t numero)
 {

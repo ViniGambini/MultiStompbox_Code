@@ -1,7 +1,6 @@
 #ifndef Fonctions_h
 #define Fonctions_h
 
-#include "DFRobot_GDL.h"
 #include "IO_Pin.h"
 #include <SPI.h>
 

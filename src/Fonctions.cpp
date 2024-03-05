@@ -30,8 +30,7 @@ void init_board(void){
     pinMode(IO_S2_ENC, OUTPUT);
     pinMode(IO_SW_ENC, OUTPUT);
 
-    delay(200);
-
+    delay(100);
 }
 
 void init_pots(void){

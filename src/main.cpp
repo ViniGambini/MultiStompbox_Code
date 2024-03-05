@@ -5,6 +5,7 @@
 // ---------------------------------------------- //
 
 #include <Arduino.h>
+#include "DFRobot_GDL.h"
 #include "Effet_lib.h"
 #include "Fonctions.h"
 
@@ -42,7 +43,6 @@ enum etat {
   select_ctrl3,
   change_ctrl3,
 
-  
 } etat_affichage;
 
 uint8_t currentStateCLK;           // pour encodeur

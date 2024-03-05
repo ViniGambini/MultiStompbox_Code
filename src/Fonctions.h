@@ -9,7 +9,9 @@
 // pinMode() des IOs
 void init_board(void);
 
-//void init_ecran(void);
+//Initialisation des potentiomètres
+//Registre TCON
+void init_pots(void);
 
 /*Envoie une valeur au potentiomètre donnée
   CS_pin : numéro de pin CS de la pièce

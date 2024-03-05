@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include "Fonctions.h"
 
+#define TCON 0x40  // adresse du registre TCON des potentiomètres
+
 void init_board(void){
     SPI.begin();
     Serial.begin(9600);
@@ -30,6 +32,14 @@ void init_board(void){
 
     delay(200);
 
+}
+
+void init_pots(void){
+  digitalPotRegisterWrite(IO_CS_POT_VOL, TCON, 0xFF); // Set les registres TCON
+  digitalPotRegisterWrite(IO_CS_POT_MIX, TCON, 0xFF);
+  digitalPotRegisterWrite(IO_CS_POT_A, TCON, 0xFF);
+  digitalPotRegisterWrite(IO_CS_POT_B, TCON, 0xFF);
+  delay(100);
 }
 
 void digitalPotWrite(uint8_t CS_pin, uint8_t num_pot, uint8_t pourcentage)

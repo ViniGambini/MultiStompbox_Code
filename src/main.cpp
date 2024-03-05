@@ -14,7 +14,6 @@
 
 #define POT_0 0x00 // adresse interne du pot 0
 #define POT_1 0x10 // adresse interne du pot 1
-#define TCON 0x40  // adresse du registre TCON des potentiomètres
 
 #define increment_pot 2 // nombre de pourcentage par clic de l'encodeur
 
@@ -54,6 +53,12 @@ unsigned long lastExecutedMillis = 0; // pour timer l'envoie des données sur le
 
 uint8_t effet_actif = 1;
 
+//----------------------------------------------//
+//                  Fonctions                   //
+//                    Écran                     //
+//----------------------------------------------//
+
+//Initialise l'écran
 void init_ecran(void){
   screen.begin();
   screen.fillScreen(COLOR_RGB565_DGRAY);
@@ -70,21 +75,17 @@ void setup()
   // Setup de l'écran
   init_ecran();
 
+  // "Setup" Encodeur
   lastStateCLK = digitalRead(IO_S1_ENC);
 
   // Setup des potentiomètres
-  digitalPotRegisterWrite(IO_CS_POT_VOL, TCON, 0xFF); // Set les registres TCON
-  digitalPotRegisterWrite(IO_CS_POT_MIX, TCON, 0xFF);
-  digitalPotRegisterWrite(IO_CS_POT_A, TCON, 0xFF);
-  digitalPotRegisterWrite(IO_CS_POT_B, TCON, 0xFF);
-  delay(200);
+  init_pots();
+
   digitalPotWrite(IO_CS_POT_VOL, POT_0, effets.lire_val_pot_vol());
   digitalPotWrite(IO_CS_POT_MIX, POT_0, effets.lire_val_pot(effet_actif, Mix));
   digitalPotWrite(IO_CS_POT_A, POT_0, effets.lire_val_pot(effet_actif, Ctrl1));
   digitalPotWrite(IO_CS_POT_A, POT_1, effets.lire_val_pot(effet_actif, Ctrl2));
   digitalPotWrite(IO_CS_POT_B, POT_0, effets.lire_val_pot(effet_actif, Ctrl3));
-
-  //screen.fillScreen(COLOR_RGB565_BLUE);
 
   // Menu Principal
 }

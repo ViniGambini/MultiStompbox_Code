@@ -26,9 +26,9 @@ void init_board(void){
     pinMode(IO_A0_MEM_2, OUTPUT);
 
     // Encodeur
-    pinMode(IO_S1_ENC, OUTPUT);
-    pinMode(IO_S2_ENC, OUTPUT);
-    pinMode(IO_SW_ENC, OUTPUT);
+    pinMode(IO_S1_ENC, INPUT);
+    pinMode(IO_S2_ENC, INPUT);
+    pinMode(IO_SW_ENC, INPUT);
 
     delay(100);
 }

@@ -53,9 +53,8 @@ uint8_t effet_actif = 1;
 //----------------------------------------------//
 
 #define couleur_fond COLOR_RGB565_BLACK
-#define couleur_nor COLOR_RGB565_SKYBLUE
-uint16_t couleur_highlight = COLOR_RGB565_LGRAY;
-#define couleur_sel COLOR_RGB565_YELLOW
+#define couleur_normal COLOR_RGB565_SKYBLUE
+#define couleur_select COLOR_RGB565_YELLOW
 #define couleur_ligne COLOR_RGB565_WHITE
 
 #define offset_x 5
@@ -80,13 +79,14 @@ void menu_princ(void)
 {
   screen.fillScreen(couleur_fond);
   screen.drawRect(0, 0, WIDTH, HEIGHT, couleur_ligne);
+
   // Ajuste les valeurs d'offset des blocs vol et ctrl
   offset_pot_vol = hauteur_texte_2 + offset_nom_effet * 2 + distance_entre_ligne;
   offset_pot_ctrl = offset_pot_vol + hauteur_texte_2 + hauteur_texte_3 + distance_entre_ligne * 3;
   offset_parametre = offset_pot_ctrl + hauteur_texte_2 * 3 + hauteur_texte_3 * 3 + distance_entre_ligne * 7;
 
   // Print le bloc Nom_effet
-  screen.setTextColor(couleur_nor);
+  screen.setTextColor(couleur_normal);
   screen.setTextSize(2);
   screen.setCursor(offset_x, offset_nom_effet);
   screen.print(effets.get_nom_effet(effet_actif));
@@ -140,6 +140,17 @@ void menu_princ(void)
   screen.print("Parametres");
 }
 
+void menu_change_nom(void)
+{
+  screen.fillRect(1, 1, WIDTH - 2, offset_nom_effet + hauteur_texte_2 * 2 + distance_entre_ligne, couleur_fond);
+  screen.setTextColor(couleur_normal);
+  screen.setTextSize(2);
+  screen.setCursor(offset_x, offset_nom_effet);
+  screen.print(effets.get_nom_effet(effet_actif));
+  screen.setCursor(offset_x, offset_nom_effet + hauteur_texte_2 + distance_entre_ligne);
+  screen.print(effet_actif);
+}
+
 //----------------------------------------------//
 //                    Setup                     //
 //----------------------------------------------//
@@ -168,6 +179,10 @@ void setup()
 
   // Menu Principal
   menu_princ();
+  screen.setTextColor(couleur_select);
+  screen.setTextSize(2);
+  screen.setCursor(offset_x, offset_nom_effet);
+  screen.print(effets.get_nom_effet(effet_actif));
 }
 
 //----------------------------------------------//
@@ -178,26 +193,63 @@ void loop()
 {
   // lit l'état de la pin CLK
   currentStateCLK = digitalRead(IO_S1_ENC);
-  if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+  switch (etat_affichage)
   {
-    if (digitalRead(IO_S2_ENC) != currentStateCLK)
-    { // CCW
-      effet_actif--;
-      if (effet_actif < 1)
+  case select_bloc_nom:
+    // Lecture du bouton
+    btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
       {
-        effet_actif = 16;
+        etat_affichage = change_nom;
+        screen.fillScreen(couleur_fond);
+        screen.drawRect(0, 0, WIDTH, HEIGHT, couleur_ligne);
+        menu_change_nom();
       }
+      lastButtonPress = millis();
     }
-    else
-    { // CW
-      effet_actif++;
-      if (effet_actif > 16)
+    break;
+
+  case change_nom:
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+        effet_actif--;
+        if (effet_actif < 1)
+        {
+          effet_actif = 16;
+        }
+      }
+      else
+      { // CW
+        effet_actif++;
+        if (effet_actif > 16)
+        {
+          effet_actif = 1;
+        }
+      }
+      menu_change_nom();
+    }
+    // Lecture du bouton
+    btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
       {
-        effet_actif = 1;
+        etat_affichage = select_bloc_nom;
+        menu_princ();
+        screen.setTextColor(couleur_select);
+        screen.setTextSize(2);
+        screen.setCursor(offset_x, offset_nom_effet);
+        screen.print(effets.get_nom_effet(effet_actif));
       }
+      lastButtonPress = millis();
     }
-    menu_princ();
+    break;
   }
+
   lastStateCLK = currentStateCLK;
   delay(1);
 }

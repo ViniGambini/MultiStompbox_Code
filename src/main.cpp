@@ -35,7 +35,10 @@ Effet_lib effets;
 enum etat
 {
   select_bloc_nom,
-  change_nom
+  change_nom,
+  select_bloc_vol,
+  select_bloc_ctrl,
+  select_bloc_para
 
 } etat_affichage;
 
@@ -151,6 +154,48 @@ void menu_change_nom(void)
   screen.print(effet_actif);
 }
 
+void clear_screen(void)
+{
+  screen.fillScreen(couleur_fond);
+  screen.drawRect(0, 0, WIDTH, HEIGHT, couleur_ligne);
+}
+
+void highlight_bloc_nom(void)
+{
+  screen.drawRect(0, 0, WIDTH, hauteur_texte_2 + offset_nom_effet * 2 + 1, couleur_select);
+}
+void unhighlight_bloc_nom(void)
+{
+  screen.drawRect(0, 0, WIDTH, hauteur_texte_2 + offset_nom_effet * 2 + 1, couleur_ligne);
+}
+
+void highlight_bloc_vol(void)
+{
+  screen.drawRect(0, offset_pot_vol - distance_entre_ligne, WIDTH, hauteur_texte_2 + hauteur_texte_3 + distance_entre_ligne * 3 + 1, couleur_select);
+}
+void unhighlight_bloc_vol(void)
+{
+  screen.drawRect(0, offset_pot_vol - distance_entre_ligne, WIDTH, hauteur_texte_2 + hauteur_texte_3 + distance_entre_ligne * 3 + 1, couleur_ligne);
+}
+
+void highlight_bloc_ctrl(void)
+{
+  screen.drawRect(0, offset_pot_ctrl - distance_entre_ligne, WIDTH, hauteur_texte_2 * 3 + hauteur_texte_3 * 3 + distance_entre_ligne * 7 + 1, couleur_select);
+}
+void unhighlight_bloc_ctrl(void)
+{
+  screen.drawRect(0, offset_pot_ctrl - distance_entre_ligne, WIDTH, hauteur_texte_2 * 3 + hauteur_texte_3 * 3 + distance_entre_ligne * 7 + 1, couleur_ligne);
+}
+
+void highlight_bloc_para(void)
+{
+  screen.drawRect(0, offset_parametre - distance_entre_ligne, WIDTH, HEIGHT - offset_parametre + distance_entre_ligne, couleur_select);
+}
+void unhighlight_bloc_para(void)
+{
+  screen.drawRect(0, offset_parametre - distance_entre_ligne, WIDTH, HEIGHT - offset_parametre + distance_entre_ligne, couleur_ligne);
+}
+
 //----------------------------------------------//
 //                    Setup                     //
 //----------------------------------------------//
@@ -179,10 +224,7 @@ void setup()
 
   // Menu Principal
   menu_princ();
-  screen.setTextColor(couleur_select);
-  screen.setTextSize(2);
-  screen.setCursor(offset_x, offset_nom_effet);
-  screen.print(effets.get_nom_effet(effet_actif));
+  highlight_bloc_nom();
 }
 
 //----------------------------------------------//
@@ -196,6 +238,19 @@ void loop()
   switch (etat_affichage)
   {
   case select_bloc_nom:
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+      }
+      else
+      { // CW
+        etat_affichage = select_bloc_vol;
+        unhighlight_bloc_nom();
+        highlight_bloc_vol();
+      }
+    }
+
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -203,8 +258,7 @@ void loop()
       if (millis() - lastButtonPress > 50)
       {
         etat_affichage = change_nom;
-        screen.fillScreen(couleur_fond);
-        screen.drawRect(0, 0, WIDTH, HEIGHT, couleur_ligne);
+        clear_screen();
         menu_change_nom();
       }
       lastButtonPress = millis();
@@ -232,6 +286,7 @@ void loop()
       }
       menu_change_nom();
     }
+
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -240,12 +295,60 @@ void loop()
       {
         etat_affichage = select_bloc_nom;
         menu_princ();
-        screen.setTextColor(couleur_select);
-        screen.setTextSize(2);
-        screen.setCursor(offset_x, offset_nom_effet);
-        screen.print(effets.get_nom_effet(effet_actif));
+        highlight_bloc_nom();
       }
       lastButtonPress = millis();
+    }
+    break;
+
+  case select_bloc_vol:
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+        etat_affichage = select_bloc_nom;
+        unhighlight_bloc_vol();
+        highlight_bloc_nom();
+      }
+      else
+      { // CW
+        etat_affichage = select_bloc_ctrl;
+        unhighlight_bloc_vol();
+        highlight_bloc_ctrl();
+      }
+    }
+    break;
+
+  case select_bloc_ctrl:
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+        etat_affichage = select_bloc_vol;
+        unhighlight_bloc_ctrl();
+        highlight_bloc_vol();
+      }
+      else
+      { // CW
+        etat_affichage = select_bloc_para;
+        unhighlight_bloc_ctrl();
+        highlight_bloc_para();
+      }
+    }
+    break;
+
+    case select_bloc_para:
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+        etat_affichage = select_bloc_ctrl;
+        unhighlight_bloc_para();
+        highlight_bloc_ctrl();
+      }
+      else
+      { // CW
+      }
     }
     break;
   }

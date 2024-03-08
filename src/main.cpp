@@ -42,6 +42,12 @@ enum etat
   select_mix,
   change_val_mix,
   select_bloc_ctrl,
+  select_ctrl1,
+  change_ctrl1,
+  select_ctrl2,
+  change_ctrl2,
+  select_ctrl3,
+  change_ctrl3,
   select_bloc_para
 
 } etat_affichage;
@@ -144,9 +150,10 @@ void menu_princ(void)
   screen.print("Parametres");*/
 }
 
+// Affiche le menu qui permet de changer les effets
 void menu_change_nom(void)
 {
-  screen.fillRect(offset_x, offset_nom_effet, WIDTH - offset_x*2, hauteur_texte_2 * 2 + distance_entre_ligne, couleur_fond);
+  screen.fillRect(offset_x, offset_nom_effet, WIDTH - offset_x * 2, hauteur_texte_2 * 2 + distance_entre_ligne, couleur_fond);
   screen.setTextColor(couleur_normal);
   screen.setTextSize(2);
   screen.setCursor(offset_x, offset_nom_effet);
@@ -155,6 +162,7 @@ void menu_change_nom(void)
   screen.print(effet_actif);
 }
 
+// Vide l'écran et affiche le contour
 void clear_screen(void)
 {
   screen.fillScreen(couleur_fond);
@@ -337,6 +345,66 @@ void highlight_pourcent_mix(bool type)
     screen.setTextColor(couleur_normal);
     screen.setCursor(WIDTH / 2 + 35, offset_pot_vol + hauteur_texte_3 + distance_entre_ligne);
     screen.print(effets.lire_val_pot(effet_actif, Mix));
+    screen.print("%");
+  }
+}
+
+void highlight_pourcent_ctrl1(bool type)
+{
+  if (type == 1)
+  {
+    screen.setTextSize(2);
+    screen.setTextColor(couleur_select);
+    screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_3 + distance_entre_ligne);
+    screen.print(effets.lire_val_pot(effet_actif, Ctrl1));
+    screen.print("%");
+  }
+  else
+  {
+    screen.setTextSize(2);
+    screen.setTextColor(couleur_normal);
+    screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_3 + distance_entre_ligne);
+    screen.print(effets.lire_val_pot(effet_actif, Ctrl1));
+    screen.print("%");
+  }
+}
+
+void highlight_pourcent_ctrl2(bool type)
+{
+  if (type == 1)
+  {
+    screen.setTextSize(2);
+    screen.setTextColor(couleur_select);
+    screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 + hauteur_texte_3 * 2 + distance_entre_ligne * 3);
+    screen.print(effets.lire_val_pot(effet_actif, Ctrl2));
+    screen.print("%");
+  }
+  else
+  {
+    screen.setTextSize(2);
+    screen.setTextColor(couleur_normal);
+    screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 + hauteur_texte_3 * 2 + distance_entre_ligne * 3);
+    screen.print(effets.lire_val_pot(effet_actif, Ctrl2));
+    screen.print("%");
+  }
+}
+
+void highlight_pourcent_ctrl3(bool type)
+{
+  if (type == 1)
+  {
+    screen.setTextSize(2);
+    screen.setTextColor(couleur_select);
+    screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 * 2 + hauteur_texte_3 * 3 + distance_entre_ligne * 5);
+    screen.print(effets.lire_val_pot(effet_actif, Ctrl3));
+    screen.print("%");
+  }
+  else
+  {
+    screen.setTextSize(2);
+    screen.setTextColor(couleur_normal);
+    screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 * 2 + hauteur_texte_3 * 3 + distance_entre_ligne * 5);
+    screen.print(effets.lire_val_pot(effet_actif, Ctrl3));
     screen.print("%");
   }
 }
@@ -608,6 +676,66 @@ void loop()
         /*etat_affichage = select_bloc_para;
         highlight_bloc_ctrl(0);
         highlight_bloc_para(1);*/
+      }
+    }
+    // Lecture du bouton
+    btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        etat_affichage = select_ctrl1;
+        highlight_bloc_ctrl(0);
+        highlight_texte_ctrl1(1);
+      }
+      lastButtonPress = millis();
+    }
+    break;
+
+  case select_ctrl1:
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+      }
+      else
+      { // CW
+        etat_affichage = select_ctrl2;
+        highlight_texte_ctrl1(0);
+        highlight_texte_ctrl2(1);
+      }
+    }
+    break;
+
+  case select_ctrl2:
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+        etat_affichage = select_ctrl1;
+        highlight_texte_ctrl2(0);
+        highlight_texte_ctrl1(1); 
+      }
+      else
+      { // CW
+        etat_affichage = select_ctrl3;
+        highlight_texte_ctrl2(0);
+        highlight_texte_ctrl3(1);
+      }
+    }
+    break;
+
+  case select_ctrl3:
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+        etat_affichage = select_ctrl2;
+        highlight_texte_ctrl3(0);
+        highlight_texte_ctrl2(1);
+      }
+      else
+      { // CW
       }
     }
     break;

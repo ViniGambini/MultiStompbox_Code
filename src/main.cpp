@@ -705,6 +705,33 @@ void loop()
         highlight_texte_ctrl2(1);
       }
     }
+    // Lecture du bouton
+    btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        etat_affichage = change_ctrl1;
+        highlight_texte_ctrl1(0);
+        highlight_pourcent_ctrl1(1);
+      }
+      lastButtonPress = millis();
+    }
+    break;
+
+  case change_ctrl1:
+    // Lecture du bouton
+    btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        etat_affichage = select_bloc_ctrl;
+        highlight_pourcent_ctrl1(0);
+        highlight_bloc_ctrl(1);
+      }
+      lastButtonPress = millis();
+    }
     break;
 
   case select_ctrl2:
@@ -714,7 +741,7 @@ void loop()
       { // CCW
         etat_affichage = select_ctrl1;
         highlight_texte_ctrl2(0);
-        highlight_texte_ctrl1(1); 
+        highlight_texte_ctrl1(1);
       }
       else
       { // CW
@@ -722,6 +749,33 @@ void loop()
         highlight_texte_ctrl2(0);
         highlight_texte_ctrl3(1);
       }
+    }
+    // Lecture du bouton
+    btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        etat_affichage = change_ctrl2;
+        highlight_texte_ctrl2(0);
+        highlight_pourcent_ctrl2(1);
+      }
+      lastButtonPress = millis();
+    }
+    break;
+
+  case change_ctrl2:
+    // Lecture du bouton
+    btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        etat_affichage = select_bloc_ctrl;
+        highlight_pourcent_ctrl2(0);
+        highlight_bloc_ctrl(1);
+      }
+      lastButtonPress = millis();
     }
     break;
 
@@ -737,6 +791,33 @@ void loop()
       else
       { // CW
       }
+    }
+    // Lecture du bouton
+    btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        etat_affichage = change_ctrl3;
+        highlight_texte_ctrl3(0);
+        highlight_pourcent_ctrl3(1);
+      }
+      lastButtonPress = millis();
+    }
+    break;
+
+  case change_ctrl3:
+    // Lecture du bouton
+    btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        etat_affichage = select_bloc_ctrl;
+        highlight_pourcent_ctrl3(0);
+        highlight_bloc_ctrl(1);
+      }
+      lastButtonPress = millis();
     }
     break;
 

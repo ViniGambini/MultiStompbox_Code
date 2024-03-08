@@ -720,6 +720,22 @@ void loop()
     break;
 
   case change_ctrl1:
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      screen.fillRect(offset_x, offset_pot_ctrl + hauteur_texte_3 + distance_entre_ligne, 50, hauteur_texte_2, couleur_fond);
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+        screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_3 + distance_entre_ligne);
+        screen.print(effets.reduire_val_pot(effet_actif, Ctrl1, increment_pot));
+        screen.print("%");
+      }
+      else
+      { // CW
+        screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_3 + distance_entre_ligne);
+        screen.print(effets.augmenter_val_pot(effet_actif, Ctrl1, increment_pot));
+        screen.print("%");
+      }
+    }
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -765,6 +781,22 @@ void loop()
     break;
 
   case change_ctrl2:
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      screen.fillRect(offset_x, offset_pot_ctrl + hauteur_texte_2 + hauteur_texte_3 * 2 + distance_entre_ligne * 3, 50, hauteur_texte_2, couleur_fond);
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+        screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 + hauteur_texte_3 * 2 + distance_entre_ligne * 3);
+        screen.print(effets.reduire_val_pot(effet_actif, Ctrl2, increment_pot));
+        screen.print("%");
+      }
+      else
+      { // CW
+        screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 + hauteur_texte_3 * 2 + distance_entre_ligne * 3);
+        screen.print(effets.augmenter_val_pot(effet_actif, Ctrl2, increment_pot));
+        screen.print("%");
+      }
+    }
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -807,6 +839,22 @@ void loop()
     break;
 
   case change_ctrl3:
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      screen.fillRect(offset_x,  offset_pot_ctrl + hauteur_texte_2 * 2 + hauteur_texte_3 * 3 + distance_entre_ligne * 5, 50, hauteur_texte_2, couleur_fond);
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+        screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 * 2 + hauteur_texte_3 * 3 + distance_entre_ligne * 5);
+        screen.print(effets.reduire_val_pot(effet_actif, Ctrl3, increment_pot));
+        screen.print("%");
+      }
+      else
+      { // CW
+        screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 * 2 + hauteur_texte_3 * 3 + distance_entre_ligne * 5);
+        screen.print(effets.augmenter_val_pot(effet_actif, Ctrl3, increment_pot));
+        screen.print("%");
+      }
+    }
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)

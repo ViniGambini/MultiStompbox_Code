@@ -12,6 +12,10 @@ void init_board(void){
     pinMode(IO_CS_POT_MIX, OUTPUT);
     pinMode(IO_CS_POT_A, OUTPUT);
     pinMode(IO_CS_POT_B, OUTPUT);
+    digitalWrite(IO_CS_POT_VOL, HIGH);
+    digitalWrite(IO_CS_POT_MIX, HIGH);
+    digitalWrite(IO_CS_POT_A, HIGH);
+    digitalWrite(IO_CS_POT_B, HIGH);
 
     // Test Point
     pinMode(IO_TP10, OUTPUT);
@@ -20,10 +24,15 @@ void init_board(void){
     pinMode(IO_S0_FV1, OUTPUT);
     pinMode(IO_S1_FV1, OUTPUT);
     pinMode(IO_S2_FV1, OUTPUT);
+    digitalWrite(IO_S0_FV1, LOW);
+    digitalWrite(IO_S1_FV1, LOW);
+    digitalWrite(IO_S2_FV1, LOW);
     
     // Mémoires I2C
     pinMode(IO_A0_MEM_1, OUTPUT);
     pinMode(IO_A0_MEM_2, OUTPUT);
+    digitalWrite(IO_A0_MEM_1, LOW);
+    digitalWrite(IO_A0_MEM_2, HIGH);
 
     // Encodeur
     pinMode(IO_S1_ENC, INPUT);

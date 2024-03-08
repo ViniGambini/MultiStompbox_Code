@@ -8,8 +8,8 @@
 // pinMode() des IOs
 void init_board(void);
 
-//Initialisation des potentiomètres
-//Registre TCON
+// Initialisation des potentiomètres
+// Registre TCON
 void init_pots(void);
 
 /*Envoie une valeur au potentiomètre donnée

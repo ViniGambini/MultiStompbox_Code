@@ -61,6 +61,7 @@ unsigned long lastButtonPress = 0; // pour anti rebond du bouton
 
 uint8_t effet_actif = 1;
 
+
 //----------------------------------------------//
 //                    Écran                     //
 //----------------------------------------------//
@@ -426,8 +427,8 @@ void setup()
   // Setup des potentiomètres
   init_pots();
 
-  digitalPotWrite(IO_CS_POT_VOL, POT_0, effets.lire_val_pot_vol());
-  digitalPotWrite(IO_CS_POT_MIX, POT_0, effets.lire_val_pot(effet_actif, Mix));
+  //digitalPotWrite(IO_CS_POT_VOL, POT_0, effets.lire_val_pot_vol());
+  //digitalPotWrite(IO_CS_POT_MIX, POT_0, effets.lire_val_pot(effet_actif, Mix));
   digitalPotWrite(IO_CS_POT_A, POT_0, effets.lire_val_pot(effet_actif, Ctrl1));
   digitalPotWrite(IO_CS_POT_A, POT_1, effets.lire_val_pot(effet_actif, Ctrl2));
   digitalPotWrite(IO_CS_POT_B, POT_0, effets.lire_val_pot(effet_actif, Ctrl3));
@@ -497,6 +498,12 @@ void loop()
           effet_actif = 1;
         }
       }
+      digitalWrite(IO_A0_MEM_1, bitRead(effet_actif-1, 3));
+      digitalWrite(IO_A0_MEM_2, !digitalRead(IO_A0_MEM_1));
+      delay(10);
+      digitalWrite(IO_S2_FV1, bitRead(effet_actif-1, 2));
+      digitalWrite(IO_S1_FV1, bitRead(effet_actif-1, 1));
+      digitalWrite(IO_S0_FV1, bitRead(effet_actif-1, 0));
       menu_change_nom();
     }
     // Lecture du bouton
@@ -735,6 +742,7 @@ void loop()
         screen.print(effets.augmenter_val_pot(effet_actif, Ctrl1, increment_pot));
         screen.print("%");
       }
+      digitalPotWrite(IO_CS_POT_A, POT_0, effets.lire_val_pot(effet_actif, Ctrl1));
     }
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
@@ -796,6 +804,7 @@ void loop()
         screen.print(effets.augmenter_val_pot(effet_actif, Ctrl2, increment_pot));
         screen.print("%");
       }
+      digitalPotWrite(IO_CS_POT_A, POT_1, effets.lire_val_pot(effet_actif, Ctrl2));
     }
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
@@ -854,6 +863,7 @@ void loop()
         screen.print(effets.augmenter_val_pot(effet_actif, Ctrl3, increment_pot));
         screen.print("%");
       }
+      digitalPotWrite(IO_CS_POT_B, POT_0, effets.lire_val_pot(effet_actif, Ctrl3));
     }
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);

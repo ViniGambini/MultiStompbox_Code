@@ -19,6 +19,7 @@ void init_board(void){
 
     // Test Point
     pinMode(IO_TP10, OUTPUT);
+    digitalWrite(IO_TP10, LOW);
     
     // FV-1
     pinMode(IO_S0_FV1, OUTPUT);

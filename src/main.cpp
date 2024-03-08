@@ -84,9 +84,6 @@ void init_ecran(void)
 // Affiche le menu principale de base
 void menu_princ(void)
 {
-  screen.fillScreen(couleur_fond);
-  screen.drawRect(0, 0, WIDTH, HEIGHT, couleur_ligne);
-
   // Ajuste les valeurs d'offset des blocs vol et ctrl
   offset_pot_vol = hauteur_texte_2 + offset_nom_effet * 2 + distance_entre_ligne;
   offset_pot_ctrl = offset_pot_vol + hauteur_texte_2 + hauteur_texte_3 + distance_entre_ligne * 3;
@@ -149,7 +146,7 @@ void menu_princ(void)
 
 void menu_change_nom(void)
 {
-  screen.fillRect(1, 1, WIDTH - 2, offset_nom_effet + hauteur_texte_2 * 2 + distance_entre_ligne, couleur_fond);
+  screen.fillRect(offset_x, offset_nom_effet, WIDTH - offset_x*2, hauteur_texte_2 * 2 + distance_entre_ligne, couleur_fond);
   screen.setTextColor(couleur_normal);
   screen.setTextSize(2);
   screen.setCursor(offset_x, offset_nom_effet);
@@ -166,149 +163,182 @@ void clear_screen(void)
 
 // Les fonctions suivante permettent de mettre en évidence certains aspects de l'affichage
 
-void highlight_bloc_nom(void)
+void highlight_bloc_nom(bool type)
 {
-  screen.drawRect(0, 0, WIDTH, hauteur_texte_2 + offset_nom_effet * 2 + 1, couleur_select);
-}
-void unhighlight_bloc_nom(void)
-{
-  screen.drawRect(0, 0, WIDTH, hauteur_texte_2 + offset_nom_effet * 2 + 1, couleur_ligne);
-}
-
-void highlight_bloc_vol(void)
-{
-  screen.drawRect(0, offset_pot_vol - distance_entre_ligne, WIDTH, hauteur_texte_2 + hauteur_texte_3 + distance_entre_ligne * 3 + 1, couleur_select);
-}
-void unhighlight_bloc_vol(void)
-{
-  screen.drawRect(0, offset_pot_vol - distance_entre_ligne, WIDTH, hauteur_texte_2 + hauteur_texte_3 + distance_entre_ligne * 3 + 1, couleur_ligne);
+  if (type == 1)
+  {
+    screen.drawRect(0, 0, WIDTH, hauteur_texte_2 + offset_nom_effet * 2 + 1, couleur_select);
+  }
+  else
+  {
+    screen.drawRect(0, 0, WIDTH, hauteur_texte_2 + offset_nom_effet * 2 + 1, couleur_ligne);
+  }
 }
 
-void highlight_bloc_ctrl(void)
+void highlight_bloc_vol(bool type)
 {
-  screen.drawRect(0, offset_pot_ctrl - distance_entre_ligne, WIDTH, hauteur_texte_2 * 3 + hauteur_texte_3 * 3 + distance_entre_ligne * 7 + 1, couleur_select);
-}
-void unhighlight_bloc_ctrl(void)
-{
-  screen.drawRect(0, offset_pot_ctrl - distance_entre_ligne, WIDTH, hauteur_texte_2 * 3 + hauteur_texte_3 * 3 + distance_entre_ligne * 7 + 1, couleur_ligne);
-}
-
-void highlight_bloc_para(void)
-{
-  screen.drawRect(0, offset_parametre - distance_entre_ligne, WIDTH, HEIGHT - offset_parametre + distance_entre_ligne, couleur_select);
-}
-void unhighlight_bloc_para(void)
-{
-  screen.drawRect(0, offset_parametre - distance_entre_ligne, WIDTH, HEIGHT - offset_parametre + distance_entre_ligne, couleur_ligne);
+  if (type == 1)
+  {
+    screen.drawRect(0, offset_pot_vol - distance_entre_ligne, WIDTH, hauteur_texte_2 + hauteur_texte_3 + distance_entre_ligne * 3 + 1, couleur_select);
+  }
+  else
+  {
+    screen.drawRect(0, offset_pot_vol - distance_entre_ligne, WIDTH, hauteur_texte_2 + hauteur_texte_3 + distance_entre_ligne * 3 + 1, couleur_ligne);
+  }
 }
 
-void highlight_texte_vol(void)
+void highlight_bloc_ctrl(bool type)
 {
-  screen.setTextSize(3);
-  screen.setTextColor(couleur_select);
-  screen.setCursor(WIDTH / 2 - 75, offset_pot_vol);
-  screen.print("Vol");
-}
-void unhighlight_texte_vol(void)
-{
-  screen.setTextSize(3);
-  screen.setTextColor(couleur_normal);
-  screen.setCursor(WIDTH / 2 - 75, offset_pot_vol);
-  screen.print("Vol");
+  if (type == 1)
+  {
+    screen.drawRect(0, offset_pot_ctrl - distance_entre_ligne, WIDTH, hauteur_texte_2 * 3 + hauteur_texte_3 * 3 + distance_entre_ligne * 7 + 1, couleur_select);
+  }
+  else
+  {
+    screen.drawRect(0, offset_pot_ctrl - distance_entre_ligne, WIDTH, hauteur_texte_2 * 3 + hauteur_texte_3 * 3 + distance_entre_ligne * 7 + 1, couleur_ligne);
+  }
 }
 
-void highlight_texte_mix(void)
+void highlight_bloc_para(bool type)
 {
-  screen.setTextSize(3);
-  screen.setTextColor(couleur_select);
-  screen.setCursor(WIDTH / 2 + 25, offset_pot_vol);
-  screen.print("Mix");
-}
-void unhighlight_texte_mix(void)
-{
-  screen.setTextSize(3);
-  screen.setTextColor(couleur_normal);
-  screen.setCursor(WIDTH / 2 + 25, offset_pot_vol);
-  screen.print("Mix");
+  if (type == 1)
+  {
+    screen.drawRect(0, offset_parametre - distance_entre_ligne, WIDTH, HEIGHT - offset_parametre + distance_entre_ligne, couleur_select);
+  }
+  else
+  {
+    screen.drawRect(0, offset_parametre - distance_entre_ligne, WIDTH, HEIGHT - offset_parametre + distance_entre_ligne, couleur_ligne);
+  }
 }
 
-void highlight_texte_ctrl1(void)
+void highlight_texte_vol(bool type)
 {
-  screen.setTextSize(3);
-  screen.setTextColor(couleur_select);
-  screen.setCursor(offset_x, offset_pot_ctrl);
-  screen.print(effets.get_nom_ctrl1(effet_actif));
-}
-void unhighlight_texte_ctrl1(void)
-{
-  screen.setTextSize(3);
-  screen.setTextColor(couleur_normal);
-  screen.setCursor(offset_x, offset_pot_ctrl);
-  screen.print(effets.get_nom_ctrl1(effet_actif));
-}
-
-void highlight_texte_ctrl2(void)
-{
-  screen.setTextSize(3);
-  screen.setTextColor(couleur_select);
-  screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 + hauteur_texte_3 + distance_entre_ligne * 2);
-  screen.print(effets.get_nom_ctrl2(effet_actif));
-}
-void unhighlight_texte_ctrl2(void)
-{
-  screen.setTextSize(3);
-  screen.setTextColor(couleur_normal);
-  screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 + hauteur_texte_3 + distance_entre_ligne * 2);
-  screen.print(effets.get_nom_ctrl2(effet_actif));
+  if (type == 1)
+  {
+    screen.setTextSize(3);
+    screen.setTextColor(couleur_select);
+    screen.setCursor(WIDTH / 2 - 75, offset_pot_vol);
+    screen.print("Vol");
+  }
+  else
+  {
+    screen.setTextSize(3);
+    screen.setTextColor(couleur_normal);
+    screen.setCursor(WIDTH / 2 - 75, offset_pot_vol);
+    screen.print("Vol");
+  }
 }
 
-void highlight_texte_ctrl3(void)
+void highlight_texte_mix(bool type)
 {
-  screen.setTextSize(3);
-  screen.setTextColor(couleur_select);
-  screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 * 2 + hauteur_texte_3 * 2 + distance_entre_ligne * 4);
-  screen.print(effets.get_nom_ctrl3(effet_actif));
-}
-void unhighlight_texte_ctrl3(void)
-{
-  screen.setTextSize(3);
-  screen.setTextColor(couleur_normal);
-  screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 * 2 + hauteur_texte_3 * 2 + distance_entre_ligne * 4);
-  screen.print(effets.get_nom_ctrl3(effet_actif));
-}
-
-void highlight_pourcent_vol(void)
-{
-  screen.setTextSize(2);
-  screen.setTextColor(couleur_select);
-  screen.setCursor(WIDTH / 2 - 65, offset_pot_vol + hauteur_texte_3 + distance_entre_ligne);
-  screen.print(effets.lire_val_pot_vol());
-  screen.print("%");
-}
-void unhighlight_pourcent_vol(void)
-{
-  screen.setTextSize(2);
-  screen.setTextColor(couleur_normal);
-  screen.setCursor(WIDTH / 2 - 65, offset_pot_vol + hauteur_texte_3 + distance_entre_ligne);
-  screen.print(effets.lire_val_pot_vol());
-  screen.print("%");
+  if (type == 1)
+  {
+    screen.setTextSize(3);
+    screen.setTextColor(couleur_select);
+    screen.setCursor(WIDTH / 2 + 25, offset_pot_vol);
+    screen.print("Mix");
+  }
+  else
+  {
+    screen.setTextSize(3);
+    screen.setTextColor(couleur_normal);
+    screen.setCursor(WIDTH / 2 + 25, offset_pot_vol);
+    screen.print("Mix");
+  }
 }
 
-void highlight_pourcent_mix(void)
+void highlight_texte_ctrl1(bool type)
 {
-  screen.setTextSize(2);
-  screen.setTextColor(couleur_select);
-  screen.setCursor(WIDTH / 2 + 35, offset_pot_vol + hauteur_texte_3 + distance_entre_ligne);
-  screen.print(effets.lire_val_pot(effet_actif, Mix));
-  screen.print("%");
+  if (type == 1)
+  {
+    screen.setTextSize(3);
+    screen.setTextColor(couleur_select);
+    screen.setCursor(offset_x, offset_pot_ctrl);
+    screen.print(effets.get_nom_ctrl1(effet_actif));
+  }
+  else
+  {
+    screen.setTextSize(3);
+    screen.setTextColor(couleur_normal);
+    screen.setCursor(offset_x, offset_pot_ctrl);
+    screen.print(effets.get_nom_ctrl1(effet_actif));
+  }
 }
-void unhighlight_pourcent_mix(void)
+
+void highlight_texte_ctrl2(bool type)
 {
-  screen.setTextSize(2);
-  screen.setTextColor(couleur_normal);
-  screen.setCursor(WIDTH / 2 + 35, offset_pot_vol + hauteur_texte_3 + distance_entre_ligne);
-  screen.print(effets.lire_val_pot(effet_actif, Mix));
-  screen.print("%");
+  if (type == 1)
+  {
+    screen.setTextSize(3);
+    screen.setTextColor(couleur_select);
+    screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 + hauteur_texte_3 + distance_entre_ligne * 2);
+    screen.print(effets.get_nom_ctrl2(effet_actif));
+  }
+  else
+  {
+    screen.setTextSize(3);
+    screen.setTextColor(couleur_normal);
+    screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 + hauteur_texte_3 + distance_entre_ligne * 2);
+    screen.print(effets.get_nom_ctrl2(effet_actif));
+  }
+}
+
+void highlight_texte_ctrl3(bool type)
+{
+  if (type == 1)
+  {
+    screen.setTextSize(3);
+    screen.setTextColor(couleur_select);
+    screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 * 2 + hauteur_texte_3 * 2 + distance_entre_ligne * 4);
+    screen.print(effets.get_nom_ctrl3(effet_actif));
+  }
+  else
+  {
+    screen.setTextSize(3);
+    screen.setTextColor(couleur_normal);
+    screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 * 2 + hauteur_texte_3 * 2 + distance_entre_ligne * 4);
+    screen.print(effets.get_nom_ctrl3(effet_actif));
+  }
+}
+
+void highlight_pourcent_vol(bool type)
+{
+  if (type == 1)
+  {
+    screen.setTextSize(2);
+    screen.setTextColor(couleur_select);
+    screen.setCursor(WIDTH / 2 - 65, offset_pot_vol + hauteur_texte_3 + distance_entre_ligne);
+    screen.print(effets.lire_val_pot_vol());
+    screen.print("%");
+  }
+  else
+  {
+    screen.setTextSize(2);
+    screen.setTextColor(couleur_normal);
+    screen.setCursor(WIDTH / 2 - 65, offset_pot_vol + hauteur_texte_3 + distance_entre_ligne);
+    screen.print(effets.lire_val_pot_vol());
+    screen.print("%");
+  }
+}
+
+void highlight_pourcent_mix(bool type)
+{
+  if (type == 1)
+  {
+    screen.setTextSize(2);
+    screen.setTextColor(couleur_select);
+    screen.setCursor(WIDTH / 2 + 35, offset_pot_vol + hauteur_texte_3 + distance_entre_ligne);
+    screen.print(effets.lire_val_pot(effet_actif, Mix));
+    screen.print("%");
+  }
+  else
+  {
+    screen.setTextSize(2);
+    screen.setTextColor(couleur_normal);
+    screen.setCursor(WIDTH / 2 + 35, offset_pot_vol + hauteur_texte_3 + distance_entre_ligne);
+    screen.print(effets.lire_val_pot(effet_actif, Mix));
+    screen.print("%");
+  }
 }
 
 //----------------------------------------------//
@@ -338,8 +368,9 @@ void setup()
   etat_affichage = select_bloc_nom;
 
   // Menu Principal
+  clear_screen();
   menu_princ();
-  highlight_bloc_nom();
+  highlight_bloc_nom(1);
 }
 
 //----------------------------------------------//
@@ -361,8 +392,8 @@ void loop()
       else
       { // CW
         etat_affichage = select_bloc_vol;
-        unhighlight_bloc_nom();
-        highlight_bloc_vol();
+        highlight_bloc_nom(0);
+        highlight_bloc_vol(1);
       }
     }
     // Lecture du bouton
@@ -407,8 +438,9 @@ void loop()
       if (millis() - lastButtonPress > 50)
       {
         etat_affichage = select_bloc_nom;
+        screen.fillRect(offset_x, offset_nom_effet + hauteur_texte_2 + distance_entre_ligne, 50, hauteur_texte_2, couleur_fond);
         menu_princ();
-        highlight_bloc_nom();
+        highlight_bloc_nom(1);
       }
       lastButtonPress = millis();
     }
@@ -420,14 +452,14 @@ void loop()
       if (digitalRead(IO_S2_ENC) != currentStateCLK)
       { // CCW
         etat_affichage = select_bloc_nom;
-        unhighlight_bloc_vol();
-        highlight_bloc_nom();
+        highlight_bloc_vol(0);
+        highlight_bloc_nom(1);
       }
       else
       { // CW
         etat_affichage = select_bloc_ctrl;
-        unhighlight_bloc_vol();
-        highlight_bloc_ctrl();
+        highlight_bloc_vol(0);
+        highlight_bloc_ctrl(1);
       }
     }
     // Lecture du bouton
@@ -437,8 +469,8 @@ void loop()
       if (millis() - lastButtonPress > 50)
       {
         etat_affichage = select_vol;
-        unhighlight_bloc_vol();
-        highlight_texte_vol();
+        highlight_bloc_vol(0);
+        highlight_texte_vol(1);
       }
       lastButtonPress = millis();
     }
@@ -453,8 +485,8 @@ void loop()
       else
       { // CW
         etat_affichage = select_mix;
-        unhighlight_texte_vol();
-        highlight_texte_mix();
+        highlight_texte_vol(0);
+        highlight_texte_mix(1);
       }
     }
     // Lecture du bouton
@@ -464,8 +496,8 @@ void loop()
       if (millis() - lastButtonPress > 50)
       {
         etat_affichage = change_val_vol;
-        unhighlight_texte_vol();
-        highlight_pourcent_vol();
+        highlight_texte_vol(0);
+        highlight_pourcent_vol(1);
       }
       lastButtonPress = millis();
     }
@@ -496,8 +528,8 @@ void loop()
       if (millis() - lastButtonPress > 50)
       {
         etat_affichage = select_bloc_vol;
-        unhighlight_pourcent_vol();
-        highlight_bloc_vol();
+        highlight_pourcent_vol(0);
+        highlight_bloc_vol(1);
       }
       lastButtonPress = millis();
     }
@@ -509,8 +541,8 @@ void loop()
       if (digitalRead(IO_S2_ENC) != currentStateCLK)
       { // CCW
         etat_affichage = select_vol;
-        unhighlight_texte_mix();
-        highlight_texte_vol();
+        highlight_texte_mix(0);
+        highlight_texte_vol(1);
       }
       else
       { // CW
@@ -523,8 +555,8 @@ void loop()
       if (millis() - lastButtonPress > 50)
       {
         etat_affichage = change_val_mix;
-        unhighlight_texte_mix();
-        highlight_pourcent_mix();
+        highlight_texte_mix(0);
+        highlight_pourcent_mix(1);
       }
       lastButtonPress = millis();
     }
@@ -555,8 +587,8 @@ void loop()
       if (millis() - lastButtonPress > 50)
       {
         etat_affichage = select_bloc_vol;
-        unhighlight_pourcent_mix();
-        highlight_bloc_vol();
+        highlight_pourcent_mix(0);
+        highlight_bloc_vol(1);
       }
       lastButtonPress = millis();
     }
@@ -568,14 +600,14 @@ void loop()
       if (digitalRead(IO_S2_ENC) != currentStateCLK)
       { // CCW
         etat_affichage = select_bloc_vol;
-        unhighlight_bloc_ctrl();
-        highlight_bloc_vol();
+        highlight_bloc_ctrl(0);
+        highlight_bloc_vol(1);
       }
       else
       { // CW
         /*etat_affichage = select_bloc_para;
-        unhighlight_bloc_ctrl();
-        highlight_bloc_para();*/
+        highlight_bloc_ctrl(0);
+        highlight_bloc_para(1);*/
       }
     }
     break;
@@ -586,8 +618,8 @@ void loop()
       if (digitalRead(IO_S2_ENC) != currentStateCLK)
       { // CCW
         etat_affichage = select_bloc_ctrl;
-        unhighlight_bloc_para();
-        highlight_bloc_ctrl();
+        highlight_bloc_para(0);
+        highlight_bloc_ctrl(1);
       }
       else
       { // CW

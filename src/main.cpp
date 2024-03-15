@@ -465,6 +465,7 @@ void loop()
         highlight_bloc_vol(1);
       }
     }
+    lastStateCLK = currentStateCLK;
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -506,6 +507,7 @@ void loop()
       digitalWrite(IO_S0_FV1, bitRead(effet_actif-1, 0));
       menu_change_nom();
     }
+    lastStateCLK = currentStateCLK;
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -537,6 +539,7 @@ void loop()
         highlight_bloc_ctrl(1);
       }
     }
+    lastStateCLK = currentStateCLK;
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -564,6 +567,7 @@ void loop()
         highlight_texte_mix(1);
       }
     }
+    lastStateCLK = currentStateCLK;
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -595,7 +599,9 @@ void loop()
         screen.print(effets.augmenter_val_pot_vol(increment_pot));
         screen.print("%");
       }
+      digitalPotWrite(IO_CS_POT_VOL, POT_0,effets.lire_val_pot_vol());
     }
+    lastStateCLK = currentStateCLK;
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -623,6 +629,7 @@ void loop()
       { // CW
       }
     }
+    lastStateCLK = currentStateCLK;
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -654,7 +661,9 @@ void loop()
         screen.print(effets.augmenter_val_pot(effet_actif, Mix, increment_pot));
         screen.print("%");
       }
+      digitalPotWrite(IO_CS_POT_MIX, POT_0, effets.lire_val_pot(effet_actif, Mix));
     }
+    lastStateCLK = currentStateCLK;
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -685,6 +694,7 @@ void loop()
         highlight_bloc_para(1);*/
       }
     }
+    lastStateCLK = currentStateCLK;
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -712,6 +722,7 @@ void loop()
         highlight_texte_ctrl2(1);
       }
     }
+    lastStateCLK = currentStateCLK;
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -744,6 +755,7 @@ void loop()
       }
       digitalPotWrite(IO_CS_POT_A, POT_0, effets.lire_val_pot(effet_actif, Ctrl1));
     }
+    lastStateCLK = currentStateCLK;
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -774,6 +786,7 @@ void loop()
         highlight_texte_ctrl3(1);
       }
     }
+    lastStateCLK = currentStateCLK;
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -806,6 +819,7 @@ void loop()
       }
       digitalPotWrite(IO_CS_POT_A, POT_1, effets.lire_val_pot(effet_actif, Ctrl2));
     }
+    lastStateCLK = currentStateCLK;
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -833,6 +847,7 @@ void loop()
       { // CW
       }
     }
+    lastStateCLK = currentStateCLK;
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -865,6 +880,7 @@ void loop()
       }
       digitalPotWrite(IO_CS_POT_B, POT_0, effets.lire_val_pot(effet_actif, Ctrl3));
     }
+    lastStateCLK = currentStateCLK;
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)
@@ -892,9 +908,8 @@ void loop()
       { // CW
       }
     }
+    lastStateCLK = currentStateCLK;
     break;
   }
-
-  lastStateCLK = currentStateCLK;
   delay(1);
 }

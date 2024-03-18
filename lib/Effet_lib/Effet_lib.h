@@ -93,21 +93,21 @@ private:
 
     uint8_t _val_pot_vol = 50;
     //                         mix ctrl1 ctrl2 ctrl3
-    uint8_t _val_pot_effet[64] = {50, 50, 50, 50,  // effet 1
-                                  50, 50, 50, 50,  // effet 2
-                                  50, 50, 50, 50,  // effet 3
-                                  50, 50, 50, 50,  // effet 4
-                                  50, 50, 50, 50,  // effet 5
-                                  50, 50, 50, 50,  // effet 6
-                                  50, 50, 50, 50,  // effet 7
-                                  50, 50, 50, 50,  // effet 8
-                                  50, 50, 50, 50,  // effet 9
-                                  50, 50, 50, 50,  // effet 10
-                                  50, 50, 50, 50,  // effet 11
-                                  50, 50, 50, 50,  // effet 12
-                                  50, 50, 50, 50,  // effet 13
-                                  50, 50, 50, 50,  // effet 14
-                                  50, 50, 50, 50,  // effet 15
-                                  50, 50, 50, 50}; // effet 16
+    uint8_t _val_pot_effet[64] = {50, 50, 50, 50,  // effet 1  Shimmer Reverb
+                                  50, 50, 50, 50,  // effet 2  Modulated Reverb
+                                  50, 50, 50, 50,  // effet 3  Modulated Delay
+                                  50, 50, 50, 50,  // effet 4  Pitch Delay
+                                  50, 50, 50, 50,  // effet 5  Bit Crusher
+                                  50, 0, 50, 100,  // effet 6  Dual Pitch Shifter
+                                  50, 50, 50, 50,  // effet 7  Hamonic Tremolo
+                                  50, 50, 50, 50,  // effet 8  Daydream
+                                  50, 50, 50, 50,  // effet 9  Phaser
+                                  50, 50, 50, 50,  // effet 10 Flanger
+                                  50, 50, 50, 50,  // effet 11 Chorus
+                                  50, 50, 50, 50,  // effet 12 Harmonic Tremolo
+                                  50, 50, 50, 50,  // effet 13 Pulse Tremolo
+                                  50, 50, 50, 50,  // effet 14 Ring Modulation
+                                  50, 50, 50, 50,  // effet 15 Pitch Modulation
+                                  50, 50, 50, 50}; // effet 16 Auto-Filter
 };
 #endif

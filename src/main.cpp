@@ -65,7 +65,7 @@ uint8_t effet_actif = 1;
 
 #define couleur_fond COLOR_RGB565_BLACK
 #define couleur_normal COLOR_RGB565_GREEN
-#define couleur_select COLOR_RGB565_YELLOW
+#define couleur_select COLOR_RGB565_WHITE
 #define couleur_ligne COLOR_RGB565_GREEN
 
 #define offset_x 5
@@ -143,9 +143,9 @@ void menu_princ(void)
   screen.drawFastHLine(0, offset_pot_ctrl + hauteur_texte_2 * 3 + hauteur_texte_3 * 3 + distance_entre_ligne * 6, WIDTH, couleur_ligne);
 
   // Print le bloc paramètre
-  /*screen.setTextSize(3);
+  screen.setTextSize(3);
   screen.setCursor(offset_x, offset_parametre);
-  screen.print("Parametres");*/
+  screen.print("Parametres");
 }
 
 // Affiche le menu qui permet de changer les effets
@@ -632,9 +632,9 @@ void loop()
       }
       else
       { // CW
-        /*etat_affichage = select_bloc_para;
+        etat_affichage = select_bloc_para;
         highlight_bloc_ctrl(0);
-        highlight_bloc_para(1);*/
+        highlight_bloc_para(1);
       }
     }
     lastStateCLK = currentStateCLK;

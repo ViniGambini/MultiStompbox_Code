@@ -42,11 +42,8 @@ enum etat
   select_mix,
   change_val_mix,
   select_bloc_ctrl,
-  select_ctrl1,
   change_ctrl1,
-  select_ctrl2,
   change_ctrl2,
-  select_ctrl3,
   change_ctrl3,
   select_bloc_para
 
@@ -67,9 +64,9 @@ uint8_t effet_actif = 1;
 //----------------------------------------------//
 
 #define couleur_fond COLOR_RGB565_BLACK
-#define couleur_normal COLOR_RGB565_SKYBLUE
+#define couleur_normal COLOR_RGB565_GREEN
 #define couleur_select COLOR_RGB565_YELLOW
-#define couleur_ligne COLOR_RGB565_WHITE
+#define couleur_ligne COLOR_RGB565_GREEN
 
 #define offset_x 5
 #define offset_nom_effet 8
@@ -253,60 +250,6 @@ void highlight_texte_mix(bool type)
     screen.setTextColor(couleur_normal);
     screen.setCursor(WIDTH / 2 + 25, offset_pot_vol);
     screen.print("Mix");
-  }
-}
-
-void highlight_texte_ctrl1(bool type)
-{
-  if (type == 1)
-  {
-    screen.setTextSize(3);
-    screen.setTextColor(couleur_select);
-    screen.setCursor(offset_x, offset_pot_ctrl);
-    screen.print(effets.get_nom_ctrl1(effet_actif));
-  }
-  else
-  {
-    screen.setTextSize(3);
-    screen.setTextColor(couleur_normal);
-    screen.setCursor(offset_x, offset_pot_ctrl);
-    screen.print(effets.get_nom_ctrl1(effet_actif));
-  }
-}
-
-void highlight_texte_ctrl2(bool type)
-{
-  if (type == 1)
-  {
-    screen.setTextSize(3);
-    screen.setTextColor(couleur_select);
-    screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 + hauteur_texte_3 + distance_entre_ligne * 2);
-    screen.print(effets.get_nom_ctrl2(effet_actif));
-  }
-  else
-  {
-    screen.setTextSize(3);
-    screen.setTextColor(couleur_normal);
-    screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 + hauteur_texte_3 + distance_entre_ligne * 2);
-    screen.print(effets.get_nom_ctrl2(effet_actif));
-  }
-}
-
-void highlight_texte_ctrl3(bool type)
-{
-  if (type == 1)
-  {
-    screen.setTextSize(3);
-    screen.setTextColor(couleur_select);
-    screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 * 2 + hauteur_texte_3 * 2 + distance_entre_ligne * 4);
-    screen.print(effets.get_nom_ctrl3(effet_actif));
-  }
-  else
-  {
-    screen.setTextSize(3);
-    screen.setTextColor(couleur_normal);
-    screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 * 2 + hauteur_texte_3 * 2 + distance_entre_ligne * 4);
-    screen.print(effets.get_nom_ctrl3(effet_actif));
   }
 }
 
@@ -701,36 +644,8 @@ void loop()
     {
       if (millis() - lastButtonPress > 50)
       {
-        etat_affichage = select_ctrl1;
-        highlight_bloc_ctrl(0);
-        highlight_texte_ctrl1(1);
-      }
-      lastButtonPress = millis();
-    }
-    break;
-
-  case select_ctrl1:
-    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
-    {
-      if (digitalRead(IO_S2_ENC) != currentStateCLK)
-      { // CCW
-      }
-      else
-      { // CW
-        etat_affichage = select_ctrl2;
-        highlight_texte_ctrl1(0);
-        highlight_texte_ctrl2(1);
-      }
-    }
-    lastStateCLK = currentStateCLK;
-    // Lecture du bouton
-    btnState = digitalRead(IO_SW_ENC);
-    if (btnState == LOW)
-    {
-      if (millis() - lastButtonPress > 50)
-      {
         etat_affichage = change_ctrl1;
-        highlight_texte_ctrl1(0);
+        highlight_bloc_ctrl(0);
         highlight_pourcent_ctrl1(1);
       }
       lastButtonPress = millis();
@@ -762,39 +677,8 @@ void loop()
     {
       if (millis() - lastButtonPress > 50)
       {
-        etat_affichage = select_bloc_ctrl;
-        highlight_pourcent_ctrl1(0);
-        highlight_bloc_ctrl(1);
-      }
-      lastButtonPress = millis();
-    }
-    break;
-
-  case select_ctrl2:
-    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
-    {
-      if (digitalRead(IO_S2_ENC) != currentStateCLK)
-      { // CCW
-        etat_affichage = select_ctrl1;
-        highlight_texte_ctrl2(0);
-        highlight_texte_ctrl1(1);
-      }
-      else
-      { // CW
-        etat_affichage = select_ctrl3;
-        highlight_texte_ctrl2(0);
-        highlight_texte_ctrl3(1);
-      }
-    }
-    lastStateCLK = currentStateCLK;
-    // Lecture du bouton
-    btnState = digitalRead(IO_SW_ENC);
-    if (btnState == LOW)
-    {
-      if (millis() - lastButtonPress > 50)
-      {
         etat_affichage = change_ctrl2;
-        highlight_texte_ctrl2(0);
+        highlight_pourcent_ctrl1(0);
         highlight_pourcent_ctrl2(1);
       }
       lastButtonPress = millis();
@@ -826,41 +710,13 @@ void loop()
     {
       if (millis() - lastButtonPress > 50)
       {
-        etat_affichage = select_bloc_ctrl;
-        highlight_pourcent_ctrl2(0);
-        highlight_bloc_ctrl(1);
-      }
-      lastButtonPress = millis();
-    }
-    break;
-
-  case select_ctrl3:
-    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
-    {
-      if (digitalRead(IO_S2_ENC) != currentStateCLK)
-      { // CCW
-        etat_affichage = select_ctrl2;
-        highlight_texte_ctrl3(0);
-        highlight_texte_ctrl2(1);
-      }
-      else
-      { // CW
-      }
-    }
-    lastStateCLK = currentStateCLK;
-    // Lecture du bouton
-    btnState = digitalRead(IO_SW_ENC);
-    if (btnState == LOW)
-    {
-      if (millis() - lastButtonPress > 50)
-      {
         etat_affichage = change_ctrl3;
-        highlight_texte_ctrl3(0);
+        highlight_pourcent_ctrl2(0);
         highlight_pourcent_ctrl3(1);
       }
       lastButtonPress = millis();
     }
-    break;
+    break;  
 
   case change_ctrl3:
     if (currentStateCLK != lastStateCLK && currentStateCLK == 1)

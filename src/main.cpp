@@ -45,7 +45,8 @@ enum etat
   change_ctrl1,
   change_ctrl2,
   change_ctrl3,
-  select_bloc_para
+  select_bloc_para,
+  select_para
 
 } etat_affichage;
 
@@ -57,7 +58,6 @@ unsigned long lastButtonPress = 0; // pour anti rebond du bouton
 // unsigned long lastExecutedMillis = 0; // pour timer l'envoie des données sur le terminal
 
 uint8_t effet_actif = 1;
-
 
 //----------------------------------------------//
 //                    Écran                     //
@@ -158,6 +158,15 @@ void menu_change_nom(void)
   screen.print(effets.get_nom_effet(effet_actif));
   screen.setCursor(offset_x, offset_nom_effet + hauteur_texte_2 + distance_entre_ligne);
   screen.print(effet_actif);
+}
+
+// Affiche le menu paramètre
+void menu_parametre(void){
+  screen.setTextColor(couleur_normal);
+  screen.setTextSize(3);
+  screen.setCursor(offset_x, offset_nom_effet);
+  screen.print("Parametre");
+  screen.drawFastHLine(0, hauteur_texte_3 + offset_nom_effet * 2, WIDTH, couleur_ligne);
 }
 
 // Vide l'écran et affiche le contour
@@ -370,8 +379,8 @@ void setup()
   // Setup des potentiomètres
   init_pots();
 
-  //digitalPotWrite(IO_CS_POT_VOL, POT_0, effets.lire_val_pot_vol());
-  //digitalPotWrite(IO_CS_POT_MIX, POT_0, effets.lire_val_pot(effet_actif, Mix));
+  // digitalPotWrite(IO_CS_POT_VOL, POT_0, effets.lire_val_pot_vol());
+  // digitalPotWrite(IO_CS_POT_MIX, POT_0, effets.lire_val_pot(effet_actif, Mix));
   digitalPotWrite(IO_CS_POT_A, POT_0, effets.lire_val_pot(effet_actif, Ctrl1));
   digitalPotWrite(IO_CS_POT_A, POT_1, effets.lire_val_pot(effet_actif, Ctrl2));
   digitalPotWrite(IO_CS_POT_B, POT_0, effets.lire_val_pot(effet_actif, Ctrl3));
@@ -442,12 +451,12 @@ void loop()
           effet_actif = 1;
         }
       }
-      digitalWrite(IO_A0_MEM_1, bitRead(effet_actif-1, 3));
+      digitalWrite(IO_A0_MEM_1, bitRead(effet_actif - 1, 3));
       digitalWrite(IO_A0_MEM_2, !digitalRead(IO_A0_MEM_1));
       delay(10);
-      digitalWrite(IO_S2_FV1, bitRead(effet_actif-1, 2));
-      digitalWrite(IO_S1_FV1, bitRead(effet_actif-1, 1));
-      digitalWrite(IO_S0_FV1, bitRead(effet_actif-1, 0));
+      digitalWrite(IO_S2_FV1, bitRead(effet_actif - 1, 2));
+      digitalWrite(IO_S1_FV1, bitRead(effet_actif - 1, 1));
+      digitalWrite(IO_S0_FV1, bitRead(effet_actif - 1, 0));
       menu_change_nom();
     }
     lastStateCLK = currentStateCLK;
@@ -542,7 +551,7 @@ void loop()
         screen.print(effets.augmenter_val_pot_vol(increment_pot));
         screen.print("%");
       }
-      digitalPotWrite(IO_CS_POT_VOL, POT_0,effets.lire_val_pot_vol());
+      digitalPotWrite(IO_CS_POT_VOL, POT_0, effets.lire_val_pot_vol());
     }
     lastStateCLK = currentStateCLK;
     // Lecture du bouton
@@ -716,12 +725,12 @@ void loop()
       }
       lastButtonPress = millis();
     }
-    break;  
+    break;
 
   case change_ctrl3:
     if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
     {
-      screen.fillRect(offset_x,  offset_pot_ctrl + hauteur_texte_2 * 2 + hauteur_texte_3 * 3 + distance_entre_ligne * 5, 50, hauteur_texte_2, couleur_fond);
+      screen.fillRect(offset_x, offset_pot_ctrl + hauteur_texte_2 * 2 + hauteur_texte_3 * 3 + distance_entre_ligne * 5, 50, hauteur_texte_2, couleur_fond);
       if (digitalRead(IO_S2_ENC) != currentStateCLK)
       { // CCW
         screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 * 2 + hauteur_texte_3 * 3 + distance_entre_ligne * 5);
@@ -765,7 +774,23 @@ void loop()
       }
     }
     lastStateCLK = currentStateCLK;
+    // Lecture du bouton
+    btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        etat_affichage = select_bloc_ctrl;
+        clear_screen();
+        menu_parametre();
+      }
+      lastButtonPress = millis();
+    }
     break;
+
+    case select_para:
+
+      break;
   }
   delay(1);
 }

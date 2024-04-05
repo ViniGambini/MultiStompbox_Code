@@ -37,9 +37,7 @@ enum etat
   select_bloc_nom,
   change_nom,
   select_bloc_vol,
-  select_vol,
   change_val_vol,
-  select_mix,
   change_val_mix,
   select_bloc_ctrl,
   change_ctrl1,
@@ -161,7 +159,8 @@ void menu_change_nom(void)
 }
 
 // Affiche le menu paramètre
-void menu_parametre(void){
+void menu_parametre(void)
+{
   screen.setTextColor(couleur_normal);
   screen.setTextSize(3);
   screen.setCursor(offset_x, offset_nom_effet);
@@ -223,42 +222,6 @@ void highlight_bloc_para(bool type)
   else
   {
     screen.drawRect(0, offset_parametre - distance_entre_ligne, WIDTH, HEIGHT - offset_parametre + distance_entre_ligne, couleur_ligne);
-  }
-}
-
-void highlight_texte_vol(bool type)
-{
-  if (type == 1)
-  {
-    screen.setTextSize(3);
-    screen.setTextColor(couleur_select);
-    screen.setCursor(WIDTH / 2 - 75, offset_pot_vol);
-    screen.print("Vol");
-  }
-  else
-  {
-    screen.setTextSize(3);
-    screen.setTextColor(couleur_normal);
-    screen.setCursor(WIDTH / 2 - 75, offset_pot_vol);
-    screen.print("Vol");
-  }
-}
-
-void highlight_texte_mix(bool type)
-{
-  if (type == 1)
-  {
-    screen.setTextSize(3);
-    screen.setTextColor(couleur_select);
-    screen.setCursor(WIDTH / 2 + 25, offset_pot_vol);
-    screen.print("Mix");
-  }
-  else
-  {
-    screen.setTextSize(3);
-    screen.setTextColor(couleur_normal);
-    screen.setCursor(WIDTH / 2 + 25, offset_pot_vol);
-    screen.print("Mix");
   }
 }
 
@@ -457,6 +420,11 @@ void loop()
       digitalWrite(IO_S2_FV1, bitRead(effet_actif - 1, 2));
       digitalWrite(IO_S1_FV1, bitRead(effet_actif - 1, 1));
       digitalWrite(IO_S0_FV1, bitRead(effet_actif - 1, 0));
+
+      digitalPotWrite(IO_CS_POT_MIX, POT_0, effets.lire_val_pot(effet_actif, Mix));
+      digitalPotWrite(IO_CS_POT_A, POT_0, effets.lire_val_pot(effet_actif, Ctrl1));
+      digitalPotWrite(IO_CS_POT_A, POT_1, effets.lire_val_pot(effet_actif, Ctrl2));
+      digitalPotWrite(IO_CS_POT_B, POT_0, effets.lire_val_pot(effet_actif, Ctrl3));
       menu_change_nom();
     }
     lastStateCLK = currentStateCLK;
@@ -498,36 +466,8 @@ void loop()
     {
       if (millis() - lastButtonPress > 50)
       {
-        etat_affichage = select_vol;
-        highlight_bloc_vol(0);
-        highlight_texte_vol(1);
-      }
-      lastButtonPress = millis();
-    }
-    break;
-
-  case select_vol:
-    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
-    {
-      if (digitalRead(IO_S2_ENC) != currentStateCLK)
-      { // CCW
-      }
-      else
-      { // CW
-        etat_affichage = select_mix;
-        highlight_texte_vol(0);
-        highlight_texte_mix(1);
-      }
-    }
-    lastStateCLK = currentStateCLK;
-    // Lecture du bouton
-    btnState = digitalRead(IO_SW_ENC);
-    if (btnState == LOW)
-    {
-      if (millis() - lastButtonPress > 50)
-      {
         etat_affichage = change_val_vol;
-        highlight_texte_vol(0);
+        highlight_bloc_vol(0);
         highlight_pourcent_vol(1);
       }
       lastButtonPress = millis();
@@ -560,36 +500,8 @@ void loop()
     {
       if (millis() - lastButtonPress > 50)
       {
-        etat_affichage = select_bloc_vol;
-        highlight_pourcent_vol(0);
-        highlight_bloc_vol(1);
-      }
-      lastButtonPress = millis();
-    }
-    break;
-
-  case select_mix:
-    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
-    {
-      if (digitalRead(IO_S2_ENC) != currentStateCLK)
-      { // CCW
-        etat_affichage = select_vol;
-        highlight_texte_mix(0);
-        highlight_texte_vol(1);
-      }
-      else
-      { // CW
-      }
-    }
-    lastStateCLK = currentStateCLK;
-    // Lecture du bouton
-    btnState = digitalRead(IO_SW_ENC);
-    if (btnState == LOW)
-    {
-      if (millis() - lastButtonPress > 50)
-      {
         etat_affichage = change_val_mix;
-        highlight_texte_mix(0);
+        highlight_pourcent_vol(0);
         highlight_pourcent_mix(1);
       }
       lastButtonPress = millis();
@@ -788,9 +700,21 @@ void loop()
     }
     break;
 
-    case select_para:
-
-      break;
+  case select_para:
+    // Lecture du bouton
+    btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        etat_affichage = select_bloc_para;
+        clear_screen();
+        menu_princ();
+        highlight_bloc_para(1);
+      }
+      lastButtonPress = millis();
+    }
+    break;
   }
   delay(1);
 }

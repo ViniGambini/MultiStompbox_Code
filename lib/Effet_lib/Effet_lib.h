@@ -91,23 +91,23 @@ private:
     char _buffer[20];
     uint8_t _numero;
 
-    uint8_t _val_pot_vol = 50;
+    uint8_t _val_pot_vol = 25;
     //                         mix ctrl1 ctrl2 ctrl3
-    uint8_t _val_pot_effet[64] = {50, 50, 50, 50,  // effet 1  Shimmer Reverb
-                                  50, 50, 50, 50,  // effet 2  Modulated Reverb
-                                  50, 50, 50, 50,  // effet 3  Modulated Delay
-                                  50, 50, 50, 50,  // effet 4  Pitch Delay
-                                  50, 50, 50, 50,  // effet 5  Bit Crusher
+    uint8_t _val_pot_effet[64] = {50, 75, 65, 65,  // effet 1  Shimmer Reverb
+                        /**/          50, 50, 50, 50,  // effet 2  Modulated Reverb
+                                  50, 50, 10, 25,  // effet 3  Modulated Delay
+                                  40, 5, 40, 0,  // effet 4  Pitch Delay
+                                  75, 45, 65, 75,  // effet 5  Bit Crusher
                                   50, 0, 50, 100,  // effet 6  Dual Pitch Shifter
-                                  50, 50, 50, 50,  // effet 7  Hamonic Tremolo
-                                  50, 50, 50, 50,  // effet 8  Daydream
-                                  50, 50, 50, 50,  // effet 9  Phaser
-                                  50, 50, 50, 50,  // effet 10 Flanger
-                                  50, 50, 50, 50,  // effet 11 Chorus
-                                  50, 50, 50, 50,  // effet 12 Harmonic Tremolo
-                                  50, 50, 50, 50,  // effet 13 Pulse Tremolo
-                                  50, 50, 50, 50,  // effet 14 Ring Modulation
-                                  50, 50, 50, 50,  // effet 15 Pitch Modulation
-                                  50, 50, 50, 50}; // effet 16 Auto-Filter
+                                  50, 25, 60, 30,  // effet 7  Hamonic Tremolo
+                                  50, 0, 35, 65,  // effet 8  Daydream
+                                  50, 35, 40, 60,  // effet 9  Phaser
+                                  50, 40, 75, 75,  // effet 10 Flanger
+                                  75, 25, 100, 25,  // effet 11 Chorus
+                        /**/          50, 50, 50, 50,  // effet 12 Harmonic Tremolo
+                                  50, 60, 40, 0,  // effet 13 Pulse Tremolo
+                        /**/          50, 50, 50, 50,  // effet 14 Ring Modulation
+                                  75, 50, 25, 0,  // effet 15 Pitch Modulation
+                                  50, 50, 65, 55}; // effet 16 Auto-Filter
 };
 #endif

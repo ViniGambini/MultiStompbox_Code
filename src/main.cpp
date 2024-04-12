@@ -72,6 +72,9 @@ uint8_t offset_pot_vol = 0;
 uint8_t offset_pot_ctrl = 0;
 uint16_t offset_parametre = 0;
 
+#define offset_x_val_para1 140
+uint8_t offset_para1 = 0;
+
 #define distance_entre_ligne 8
 #define hauteur_texte_2 14
 #define hauteur_texte_3 21
@@ -161,11 +164,19 @@ void menu_change_nom(void)
 // Affiche le menu paramètre
 void menu_parametre(void)
 {
+  offset_para1 = hauteur_texte_3 + offset_nom_effet * 2 + distance_entre_ligne;
+
   screen.setTextColor(couleur_normal);
   screen.setTextSize(3);
   screen.setCursor(offset_x, offset_nom_effet);
   screen.print("Parametre");
   screen.drawFastHLine(0, hauteur_texte_3 + offset_nom_effet * 2, WIDTH, couleur_ligne);
+
+  screen.setTextSize(2);
+  screen.setCursor(offset_x, offset_para1);
+  screen.print("Increment :");
+  screen.setCursor(offset_x + offset_x_val_para1, offset_para1);
+  screen.print("5");
 }
 
 // Vide l'écran et affiche le contour
@@ -176,7 +187,6 @@ void clear_screen(void)
 }
 
 // Les fonctions suivante permettent de mettre en évidence certains aspects de l'affichage
-
 void highlight_bloc_nom(bool type)
 {
   if (type == 1)

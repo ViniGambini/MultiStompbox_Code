@@ -16,8 +16,6 @@
 #define POT_0 0x00 // adresse interne du pot 0
 #define POT_1 0x10 // adresse interne du pot 1
 
-#define increment_pot 5 // nombre de pourcentage par clic de l'encodeur
-
 #define WIDTH screen.width()   // 240
 #define HEIGHT screen.height() // 320
 
@@ -55,7 +53,10 @@ unsigned long lastButtonPress = 0; // pour anti rebond du bouton
 
 // unsigned long lastExecutedMillis = 0; // pour timer l'envoie des données sur le terminal
 
-uint8_t effet_actif = 1;
+uint8_t effet_actif = 1;   // Numéro de l'effet actif 1 à 16
+
+uint8_t increments[3] = {1, 2, 5}; // Nombre de pourcentage par clic de l'encodeur
+uint8_t inc_numero_actuel = 2;
 
 //----------------------------------------------//
 //                    Écran                     //
@@ -176,7 +177,7 @@ void menu_parametre(void)
   screen.setCursor(offset_x, offset_para1);
   screen.print("Increment :");
   screen.setCursor(offset_x + offset_x_val_para1, offset_para1);
-  screen.print("5");
+  screen.print(increments[inc_numero_actuel]);
 }
 
 // Vide l'écran et affiche le contour
@@ -331,6 +332,26 @@ void highlight_pourcent_ctrl3(bool type)
     screen.setTextColor(couleur_normal);
     screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 * 2 + hauteur_texte_3 * 3 + distance_entre_ligne * 5);
     screen.print(effets.lire_val_pot(effet_actif, Ctrl3));
+    screen.print("%");
+  }
+}
+
+void highlight_para_increment(bool type)
+{
+  if (type == 1)
+  {
+    screen.setTextSize(2);
+    screen.setTextColor(couleur_select);
+    screen.setCursor(offset_x + offset_x_val_para1, offset_para1);
+    screen.print(increments[inc_numero_actuel]);
+    screen.print("%");
+  }
+  else
+  {
+    screen.setTextSize(2);
+    screen.setTextColor(couleur_normal);
+    screen.setCursor(offset_x + offset_x_val_para1, offset_para1);
+    screen.print(increments[inc_numero_actuel]);
     screen.print("%");
   }
 }
@@ -492,13 +513,13 @@ void loop()
       if (digitalRead(IO_S2_ENC) != currentStateCLK)
       { // CCW
         screen.setCursor(WIDTH / 2 - 65, offset_pot_vol + hauteur_texte_3 + distance_entre_ligne);
-        screen.print(effets.reduire_val_pot_vol(increment_pot));
+        screen.print(effets.reduire_val_pot_vol(increments[inc_numero_actuel]));
         screen.print("%");
       }
       else
       { // CW
         screen.setCursor(WIDTH / 2 - 65, offset_pot_vol + hauteur_texte_3 + distance_entre_ligne);
-        screen.print(effets.augmenter_val_pot_vol(increment_pot));
+        screen.print(effets.augmenter_val_pot_vol(increments[inc_numero_actuel]));
         screen.print("%");
       }
       digitalPotWrite(IO_CS_POT_VOL, POT_0, effets.lire_val_pot_vol());
@@ -526,13 +547,13 @@ void loop()
       if (digitalRead(IO_S2_ENC) != currentStateCLK)
       { // CCW
         screen.setCursor(WIDTH / 2 + 35, offset_pot_vol + hauteur_texte_3 + distance_entre_ligne);
-        screen.print(effets.reduire_val_pot(effet_actif, Mix, increment_pot));
+        screen.print(effets.reduire_val_pot(effet_actif, Mix, increments[inc_numero_actuel]));
         screen.print("%");
       }
       else
       { // CW
         screen.setCursor(WIDTH / 2 + 35, offset_pot_vol + hauteur_texte_3 + distance_entre_ligne);
-        screen.print(effets.augmenter_val_pot(effet_actif, Mix, increment_pot));
+        screen.print(effets.augmenter_val_pot(effet_actif, Mix, increments[inc_numero_actuel]));
         screen.print("%");
       }
       digitalPotWrite(IO_CS_POT_MIX, POT_0, effets.lire_val_pot(effet_actif, Mix));
@@ -590,13 +611,13 @@ void loop()
       if (digitalRead(IO_S2_ENC) != currentStateCLK)
       { // CCW
         screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_3 + distance_entre_ligne);
-        screen.print(effets.reduire_val_pot(effet_actif, Ctrl1, increment_pot));
+        screen.print(effets.reduire_val_pot(effet_actif, Ctrl1, increments[inc_numero_actuel]));
         screen.print("%");
       }
       else
       { // CW
         screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_3 + distance_entre_ligne);
-        screen.print(effets.augmenter_val_pot(effet_actif, Ctrl1, increment_pot));
+        screen.print(effets.augmenter_val_pot(effet_actif, Ctrl1, increments[inc_numero_actuel]));
         screen.print("%");
       }
       digitalPotWrite(IO_CS_POT_A, POT_0, effets.lire_val_pot(effet_actif, Ctrl1));
@@ -623,13 +644,13 @@ void loop()
       if (digitalRead(IO_S2_ENC) != currentStateCLK)
       { // CCW
         screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 + hauteur_texte_3 * 2 + distance_entre_ligne * 3);
-        screen.print(effets.reduire_val_pot(effet_actif, Ctrl2, increment_pot));
+        screen.print(effets.reduire_val_pot(effet_actif, Ctrl2, increments[inc_numero_actuel]));
         screen.print("%");
       }
       else
       { // CW
         screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 + hauteur_texte_3 * 2 + distance_entre_ligne * 3);
-        screen.print(effets.augmenter_val_pot(effet_actif, Ctrl2, increment_pot));
+        screen.print(effets.augmenter_val_pot(effet_actif, Ctrl2, increments[inc_numero_actuel]));
         screen.print("%");
       }
       digitalPotWrite(IO_CS_POT_A, POT_1, effets.lire_val_pot(effet_actif, Ctrl2));
@@ -656,13 +677,13 @@ void loop()
       if (digitalRead(IO_S2_ENC) != currentStateCLK)
       { // CCW
         screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 * 2 + hauteur_texte_3 * 3 + distance_entre_ligne * 5);
-        screen.print(effets.reduire_val_pot(effet_actif, Ctrl3, increment_pot));
+        screen.print(effets.reduire_val_pot(effet_actif, Ctrl3, increments[inc_numero_actuel]));
         screen.print("%");
       }
       else
       { // CW
         screen.setCursor(offset_x, offset_pot_ctrl + hauteur_texte_2 * 2 + hauteur_texte_3 * 3 + distance_entre_ligne * 5);
-        screen.print(effets.augmenter_val_pot(effet_actif, Ctrl3, increment_pot));
+        screen.print(effets.augmenter_val_pot(effet_actif, Ctrl3, increments[inc_numero_actuel]));
         screen.print("%");
       }
       digitalPotWrite(IO_CS_POT_B, POT_0, effets.lire_val_pot(effet_actif, Ctrl3));
@@ -705,12 +726,38 @@ void loop()
         etat_affichage = select_para;
         clear_screen();
         menu_parametre();
+        highlight_para_increment(1);
       }
       lastButtonPress = millis();
     }
     break;
 
   case select_para:
+    // Lecture de l'encodeur
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      screen.setTextColor(couleur_fond);
+      screen.setCursor(offset_x + offset_x_val_para1, offset_para1);
+      screen.print(increments[inc_numero_actuel]);
+      screen.setTextColor(couleur_select);
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+        if(inc_numero_actuel > 0){
+          inc_numero_actuel--;
+        }
+        screen.setCursor(offset_x + offset_x_val_para1, offset_para1);
+        screen.print(increments[inc_numero_actuel]);
+      }
+      else
+      { // CW
+        if(inc_numero_actuel < 2){
+          inc_numero_actuel++;
+        }
+        screen.setCursor(offset_x + offset_x_val_para1, offset_para1);
+        screen.print(increments[inc_numero_actuel]);
+      }
+    }
+    lastStateCLK = currentStateCLK;
     // Lecture du bouton
     btnState = digitalRead(IO_SW_ENC);
     if (btnState == LOW)

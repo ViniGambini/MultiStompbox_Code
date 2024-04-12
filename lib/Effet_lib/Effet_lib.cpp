@@ -34,27 +34,31 @@ char *Effet_lib::get_nom_ctrl3(uint8_t numero)
 }
 
 uint8_t Effet_lib::lire_val_pot_vol(void){
-    return _val_pot_vol;
+    return 100-_val_pot_vol;
 }
 
-uint8_t Effet_lib::augmenter_val_pot_vol(uint8_t quantite){
+// Fix sur PCB
+// Inverser Réduire et Augmenter
+// Enlever les 100- dans les 3 fonction lors du fix physique
+
+uint8_t Effet_lib::reduire_val_pot_vol(uint8_t quantite){
     if(_val_pot_vol + quantite < 100){
         _val_pot_vol = _val_pot_vol + quantite;
     }
     else{
         _val_pot_vol = 100;
     }
-    return _val_pot_vol;
+    return 100-_val_pot_vol;
 }
 
-uint8_t Effet_lib::reduire_val_pot_vol(uint8_t quantite){
+uint8_t Effet_lib::augmenter_val_pot_vol(uint8_t quantite){
     if(_val_pot_vol - quantite > 0){
         _val_pot_vol = _val_pot_vol - quantite;
     }
     else{
         _val_pot_vol = 0;
     }
-    return _val_pot_vol;
+    return 100-_val_pot_vol;
 }
 
 uint8_t Effet_lib::lire_val_pot(uint8_t no_effet, pot_type no_pot)

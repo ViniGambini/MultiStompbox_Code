@@ -178,6 +178,7 @@ void menu_parametre(void)
   screen.print("Increment :");
   screen.setCursor(offset_x + offset_x_val_para1, offset_para1);
   screen.print(increments[inc_numero_actuel]);
+  screen.drawFastHLine(0, offset_para1 + hauteur_texte_2 + distance_entre_ligne, WIDTH, couleur_ligne);
 }
 
 // Vide l'écran et affiche le contour

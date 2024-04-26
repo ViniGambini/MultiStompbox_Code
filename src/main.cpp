@@ -374,7 +374,7 @@ void setup()
   // Setup des potentiomètres
   init_pots();
 
-  digitalPotWrite(IO_CS_POT_VOL, POT_0, effets.lire_val_pot_vol());
+  digitalPotWrite(IO_CS_POT_VOL, POT_0, 100-effets.lire_val_pot_vol());
   digitalPotWrite(IO_CS_POT_MIX, POT_0, effets.lire_val_pot(effet_actif, Mix));
   digitalPotWrite(IO_CS_POT_A, POT_0, effets.lire_val_pot(effet_actif, Ctrl1));
   digitalPotWrite(IO_CS_POT_A, POT_1, effets.lire_val_pot(effet_actif, Ctrl2));
@@ -523,7 +523,7 @@ void loop()
         screen.print(effets.augmenter_val_pot_vol(increments[inc_numero_actuel]));
         screen.print("%");
       }
-      digitalPotWrite(IO_CS_POT_VOL, POT_0, effets.lire_val_pot_vol());
+      digitalPotWrite(IO_CS_POT_VOL, POT_0, 100-effets.lire_val_pot_vol());
     }
     lastStateCLK = currentStateCLK;
     // Lecture du bouton

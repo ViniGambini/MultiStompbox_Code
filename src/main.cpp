@@ -145,9 +145,11 @@ void menu_princ(void)
   screen.drawFastHLine(0, offset_pot_ctrl + hauteur_texte_2 * 3 + hauteur_texte_3 * 3 + distance_entre_ligne * 6, WIDTH, couleur_ligne);
 
   // Print le bloc paramètre
-  screen.setTextSize(3);
+  screen.setTextSize(2);
   screen.setCursor(offset_x, offset_parametre);
   screen.print("Parametres");
+
+  screen.drawFastHLine(0, offset_parametre + hauteur_texte_2 + distance_entre_ligne - 1, WIDTH, couleur_ligne);
 }
 
 // Affiche le menu qui permet de changer les effets
@@ -170,7 +172,7 @@ void menu_parametre(void)
   screen.setTextColor(couleur_normal);
   screen.setTextSize(3);
   screen.setCursor(offset_x, offset_nom_effet);
-  screen.print("Parametre");
+  screen.print("Parametres");
   screen.drawFastHLine(0, hauteur_texte_3 + offset_nom_effet * 2, WIDTH, couleur_ligne);
 
   screen.setTextSize(2);
@@ -229,11 +231,11 @@ void highlight_bloc_para(bool type)
 {
   if (type == 1)
   {
-    screen.drawRect(0, offset_parametre - distance_entre_ligne, WIDTH, HEIGHT - offset_parametre + distance_entre_ligne, couleur_select);
+    screen.drawRect(0, offset_parametre - distance_entre_ligne, WIDTH, hauteur_texte_2 + distance_entre_ligne * 2, couleur_select);
   }
   else
   {
-    screen.drawRect(0, offset_parametre - distance_entre_ligne, WIDTH, HEIGHT - offset_parametre + distance_entre_ligne, couleur_ligne);
+    screen.drawRect(0, offset_parametre - distance_entre_ligne, WIDTH, hauteur_texte_2 + distance_entre_ligne * 2, couleur_ligne);
   }
 }
 

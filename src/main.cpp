@@ -95,7 +95,7 @@ void menu_princ(void)
   offset_pot_vol = hauteur_texte_2 + offset_nom_effet * 2 + distance_entre_ligne;
   offset_pot_ctrl = offset_pot_vol + hauteur_texte_2 + hauteur_texte_3 + distance_entre_ligne * 3;
   offset_parametre = offset_pot_ctrl + hauteur_texte_2 * 3 + hauteur_texte_3 * 3 + distance_entre_ligne * 7;
-  offset_sauve = offset_parametre + hauteur_texte_2 + distance_entre_ligne * 3;
+  offset_sauve = offset_parametre + hauteur_texte_2 + distance_entre_ligne * 2;
 
   // Print le bloc Nom_effet
   screen.setTextColor(couleur_normal);
@@ -151,11 +151,11 @@ void menu_princ(void)
   screen.setCursor(offset_x, offset_parametre);
   screen.print("Parametres");
 
-  screen.drawFastHLine(0, offset_parametre + hauteur_texte_2 + distance_entre_ligne - 1, WIDTH, couleur_ligne);
+  screen.drawFastHLine(0, offset_parametre + hauteur_texte_2 + distance_entre_ligne, WIDTH, couleur_ligne);
 
   // Print le bloc sauvegarde
   screen.setCursor(offset_x, offset_sauve);
-  screen.print("Sauvegarder les donnees");
+  screen.print("Sauvegarder %");
 }
 
 // Affiche le menu qui permet de changer les effets
@@ -237,11 +237,23 @@ void highlight_bloc_para(bool type)
 {
   if (type == 1)
   {
-    screen.drawRect(0, offset_parametre - distance_entre_ligne, WIDTH, hauteur_texte_2 + distance_entre_ligne * 2, couleur_select);
+    screen.drawRect(0, offset_parametre - distance_entre_ligne, WIDTH, hauteur_texte_2 + distance_entre_ligne * 2 + 1, couleur_select);
   }
   else
   {
-    screen.drawRect(0, offset_parametre - distance_entre_ligne, WIDTH, hauteur_texte_2 + distance_entre_ligne * 2, couleur_ligne);
+    screen.drawRect(0, offset_parametre - distance_entre_ligne, WIDTH, hauteur_texte_2 + distance_entre_ligne * 2 + 1, couleur_ligne);
+  }
+}
+
+void highlight_bloc_sauve(bool type)
+{
+  if (type == 1)
+  {
+    screen.drawRect(0, offset_sauve - distance_entre_ligne, WIDTH, HEIGHT - offset_sauve + distance_entre_ligne, couleur_select);
+  }
+  else
+  {
+    screen.drawRect(0, offset_sauve - distance_entre_ligne, WIDTH, HEIGHT - offset_sauve + distance_entre_ligne, couleur_ligne);
   }
 }
 
@@ -399,7 +411,7 @@ void setup()
   // Menu Principal
   menu_princ();
   highlight_bloc_nom(1);
-
+  
   Serial.println("Prog Initialise");
 }
 

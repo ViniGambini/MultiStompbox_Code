@@ -72,6 +72,7 @@ uint8_t inc_numero_actuel = 2;
 uint8_t offset_pot_vol = 0;
 uint8_t offset_pot_ctrl = 0;
 uint16_t offset_parametre = 0;
+uint16_t offset_sauve = 0;
 
 #define offset_x_val_para1 140
 uint8_t offset_para1 = 0;
@@ -94,6 +95,7 @@ void menu_princ(void)
   offset_pot_vol = hauteur_texte_2 + offset_nom_effet * 2 + distance_entre_ligne;
   offset_pot_ctrl = offset_pot_vol + hauteur_texte_2 + hauteur_texte_3 + distance_entre_ligne * 3;
   offset_parametre = offset_pot_ctrl + hauteur_texte_2 * 3 + hauteur_texte_3 * 3 + distance_entre_ligne * 7;
+  offset_sauve = offset_parametre + hauteur_texte_2 + distance_entre_ligne * 3;
 
   // Print le bloc Nom_effet
   screen.setTextColor(couleur_normal);
@@ -150,6 +152,10 @@ void menu_princ(void)
   screen.print("Parametres");
 
   screen.drawFastHLine(0, offset_parametre + hauteur_texte_2 + distance_entre_ligne - 1, WIDTH, couleur_ligne);
+
+  // Print le bloc sauvegarde
+  screen.setCursor(offset_x, offset_sauve);
+  screen.print("Sauvegarder les donnees");
 }
 
 // Affiche le menu qui permet de changer les effets

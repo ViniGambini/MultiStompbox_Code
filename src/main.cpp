@@ -364,29 +364,35 @@ void highlight_para_increment(bool type)
 void setup()
 {
   init_board();
-
+  
   // Setup de l'écran
   init_ecran();
+  clear_screen();
 
   // "Setup" Encodeur
   lastStateCLK = digitalRead(IO_S1_ENC);
 
+  // État de départ
+  etat_affichage = select_bloc_nom;
+
   // Setup des potentiomètres
   init_pots();
+
+  // Setup les effets
+  delay(250);
+  effets.init();
 
   digitalPotWrite(IO_CS_POT_VOL, POT_0, 100-effets.lire_val_pot_vol());
   digitalPotWrite(IO_CS_POT_MIX, POT_0, effets.lire_val_pot(effet_actif, Mix));
   digitalPotWrite(IO_CS_POT_A, POT_0, effets.lire_val_pot(effet_actif, Ctrl1));
   digitalPotWrite(IO_CS_POT_A, POT_1, effets.lire_val_pot(effet_actif, Ctrl2));
   digitalPotWrite(IO_CS_POT_B, POT_0, effets.lire_val_pot(effet_actif, Ctrl3));
-
-  // État de départ
-  etat_affichage = select_bloc_nom;
-
+ 
   // Menu Principal
-  clear_screen();
   menu_princ();
   highlight_bloc_nom(1);
+
+  Serial.println("Prog Initialise");
 }
 
 //----------------------------------------------//

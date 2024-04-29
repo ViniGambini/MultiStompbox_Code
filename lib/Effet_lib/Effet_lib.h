@@ -11,6 +11,7 @@
 
 #include <Arduino.h>
 #include "Effet_nom.h"
+#include <EEPROM.h>
 
 enum pot_type
 {
@@ -23,6 +24,12 @@ enum pot_type
 class Effet_lib
 {
 public:
+
+    // Initialise les effets
+    void init(void);
+
+    void save_EEPROM(void);
+
     // Permet de lire les noms des différents effets
     // entrée : numréro de 1 à 16
     //
@@ -93,8 +100,8 @@ private:
 
     uint8_t _val_pot_vol = 25;
     //                         mix ctrl1 ctrl2 ctrl3
-    uint8_t _val_pot_effet[64] = {50, 75, 65, 65,  // effet 1  Shimmer Reverb
-                        /**/          50, 50, 50, 50,  // effet 2  Modulated Reverb
+    uint8_t _val_pot_effet[64] = {00, 00, 00, 00,  // effet 1  Shimmer Reverb
+                                  50, 50, 50, 50,  // effet 2  Modulated Reverb
                                   50, 50, 10, 25,  // effet 3  Modulated Delay
                                   40, 5, 40, 0,  // effet 4  Pitch Delay
                                   75, 45, 65, 75,  // effet 5  Bit Crusher
@@ -104,9 +111,9 @@ private:
                                   50, 35, 40, 60,  // effet 9  Phaser
                                   50, 40, 75, 75,  // effet 10 Flanger
                                   75, 25, 100, 25,  // effet 11 Chorus
-                        /**/          50, 50, 50, 50,  // effet 12 Harmonic Tremolo
+                                  50, 50, 50, 50,  // effet 12 Harmonic Tremolo
                                   50, 60, 40, 0,  // effet 13 Pulse Tremolo
-                        /**/          50, 50, 50, 50,  // effet 14 Ring Modulation
+                                  50, 50, 50, 50,  // effet 14 Ring Modulation
                                   75, 50, 25, 0,  // effet 15 Pitch Modulation
                                   50, 50, 65, 55}; // effet 16 Auto-Filter
 };

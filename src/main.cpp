@@ -42,7 +42,8 @@ enum etat
   change_ctrl2,
   change_ctrl3,
   select_bloc_para,
-  select_para
+  select_para,
+  select_sauvegarde
 
 } etat_affichage;
 
@@ -741,6 +742,9 @@ void loop()
       }
       else
       { // CW
+      etat_affichage = select_sauvegarde;
+      highlight_bloc_para(0);
+      highlight_bloc_sauve(1);
       }
     }
     lastStateCLK = currentStateCLK;
@@ -795,6 +799,32 @@ void loop()
         clear_screen();
         menu_princ();
         highlight_bloc_para(1);
+      }
+      lastButtonPress = millis();
+    }
+    break;
+
+    case select_sauvegarde:
+    if (currentStateCLK != lastStateCLK && currentStateCLK == 1)
+    {
+      if (digitalRead(IO_S2_ENC) != currentStateCLK)
+      { // CCW
+        etat_affichage = select_bloc_para;
+        highlight_bloc_sauve(0);
+        highlight_bloc_para(1);
+      }
+      else
+      { // CW
+      }
+    }
+    lastStateCLK = currentStateCLK;
+    // Lecture du bouton
+    btnState = digitalRead(IO_SW_ENC);
+    if (btnState == LOW)
+    {
+      if (millis() - lastButtonPress > 50)
+      {
+        effets.save_EEPROM();
       }
       lastButtonPress = millis();
     }

@@ -8,6 +8,7 @@
 #include "DFRobot_GDL.h"
 #include "Effet_lib.h"
 #include "Fonctions.h"
+#include "Icon.h"
 
 //----------------------------------------------//
 //                    Define                    //
@@ -81,6 +82,8 @@ uint8_t offset_para1 = 0;
 #define distance_entre_ligne 8
 #define hauteur_texte_2 14
 #define hauteur_texte_3 21
+
+#define image_sauvegarde 3
 
 // Initialise l'écran
 void init_ecran(void)
@@ -400,7 +403,7 @@ void setup()
   init_pots();
 
   // Setup les effets
-  delay(250);
+  delay(500);
   effets.init();
 
   digitalPotWrite(IO_CS_POT_VOL, POT_0, 100-effets.lire_val_pot_vol());
@@ -408,7 +411,7 @@ void setup()
   digitalPotWrite(IO_CS_POT_A, POT_0, effets.lire_val_pot(effet_actif, Ctrl1));
   digitalPotWrite(IO_CS_POT_A, POT_1, effets.lire_val_pot(effet_actif, Ctrl2));
   digitalPotWrite(IO_CS_POT_B, POT_0, effets.lire_val_pot(effet_actif, Ctrl3));
- 
+
   // Menu Principal
   menu_princ();
   highlight_bloc_nom(1);
@@ -825,6 +828,9 @@ void loop()
       if (millis() - lastButtonPress > 50)
       {
         effets.save_EEPROM();
+        screen.drawXBitmap(/*x=*/WIDTH-48,/*y=*/HEIGHT-36,/*bitmap gImage_Bitmap=*/gImage[image_sauvegarde],/*w=*/32,/*h=*/32, couleur_normal);
+        delay(500);
+        screen.drawXBitmap(/*x=*/WIDTH-48,/*y=*/HEIGHT-36,/*bitmap gImage_Bitmap=*/gImage[image_sauvegarde],/*w=*/32,/*h=*/32, couleur_fond);
       }
       lastButtonPress = millis();
     }
